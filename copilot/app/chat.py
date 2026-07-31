@@ -21,6 +21,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
+from . import trace
 from .schemas import PatientContext
 from .summary import Violation
 from .tools import TOOL_SCHEMAS, ContextTools
@@ -113,39 +114,49 @@ class ClaudeChat:
         t0 = time.perf_counter()
         answer, citations = "", []
 
-        for _ in range(self.max_steps):
-            resp = client.messages.create(
-                model=self.model, max_tokens=1200, system=_SYSTEM,
-                tools=TOOL_SCHEMAS + [_RESPOND_TOOL], messages=self.messages,
-            )
-            usage["input_tokens"] += resp.usage.input_tokens
-            usage["output_tokens"] += resp.usage.output_tokens
-            self.messages.append({"role": "assistant", "content": resp.content})
+        with trace.observe("uc3_chart_qa", "agent", input={"question": question}) as root:
+            for _ in range(self.max_steps):
+                resp = client.messages.create(
+                    model=self.model, max_tokens=1200, system=_SYSTEM,
+                    tools=TOOL_SCHEMAS + [_RESPOND_TOOL], messages=self.messages,
+                )
+                usage["input_tokens"] += resp.usage.input_tokens
+                usage["output_tokens"] += resp.usage.output_tokens
+                self.messages.append({"role": "assistant", "content": resp.content})
 
-            tool_uses = [b for b in resp.content if b.type == "tool_use"]
-            if not tool_uses:
-                answer = "".join(b.text for b in resp.content if b.type == "text")
-                break
+                tool_uses = [b for b in resp.content if b.type == "tool_use"]
+                if not tool_uses:
+                    answer = "".join(b.text for b in resp.content if b.type == "text")
+                    break
 
-            responded = False
-            results = []
-            for tu in tool_uses:
-                if tu.name == "respond":
-                    answer = tu.input.get("answer", "")
-                    citations = tu.input.get("citations", [])
-                    responded = True
-                    results.append({"type": "tool_result", "tool_use_id": tu.id,
-                                    "content": "delivered"})
-                else:
-                    tool_calls.append(tu.name)
-                    out = _dispatch(self.tools, tu.name, tu.input)
-                    results.append({"type": "tool_result", "tool_use_id": tu.id,
-                                    "content": json.dumps(out, default=str)})
-            self.messages.append({"role": "user", "content": results})
-            if responded:
-                break
+                responded = False
+                results = []
+                for tu in tool_uses:
+                    if tu.name == "respond":
+                        answer = tu.input.get("answer", "")
+                        citations = tu.input.get("citations", [])
+                        responded = True
+                        results.append({"type": "tool_result", "tool_use_id": tu.id,
+                                        "content": "delivered"})
+                    else:
+                        tool_calls.append(tu.name)
+                        with trace.observe(tu.name, "tool", input=tu.input) as ts:
+                            out = _dispatch(self.tools, tu.name, tu.input)
+                            trace.update(ts, output=out)
+                        results.append({"type": "tool_result", "tool_use_id": tu.id,
+                                        "content": json.dumps(out, default=str)})
+                self.messages.append({"role": "user", "content": results})
+                if responded:
+                    break
 
-        violations = check_grounding(answer, citations, self.tools)
+            violations = check_grounding(answer, citations, self.tools)
+            trace.update(root, output={"answer": answer, "grounded": not violations},
+                         usage_details={"input": usage["input_tokens"],
+                                        "output": usage["output_tokens"]})
+        trace.score("grounded", 1.0 if not violations else 0.0,
+                    comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
+                    data_type="BOOLEAN")
+        trace.flush()
         return ChatResult(
             question=question, answer=answer, citations=citations,
             grounded=len(violations) == 0, violations=violations,

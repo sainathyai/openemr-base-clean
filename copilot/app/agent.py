@@ -21,6 +21,7 @@ from typing import Any, Optional, TypedDict
 
 from langgraph.graph import END, StateGraph
 
+from . import trace
 from .changes import ChangeSet, compute_changes
 from .fhir_client import FhirClient
 from .llm import Narrator, get_narrator
@@ -49,13 +50,17 @@ def _now() -> float:
 
 async def _prepare(state: AgentState) -> AgentState:
     t0 = _now()
-    client = FhirClient()
-    try:
-        ctx = await client.get_context(state["patient_uuid"])
-    finally:
-        await client.aclose()
-    cs = compute_changes(ctx)
-    facts = build_facts(cs)
+    with trace.observe("prepare", "span") as sp:
+        client = FhirClient()
+        try:
+            ctx = await client.get_context(state["patient_uuid"])
+        finally:
+            await client.aclose()
+        cs = compute_changes(ctx)
+        facts = build_facts(cs)
+        trace.update(sp, output={"facts": len(facts), "abnormals": len(cs.current_abnormals),
+                                 "new_meds": len(cs.new_medications)},
+                     metadata={"fetch_ms": ctx.fetch_ms})
     timings = dict(state.get("timings_ms", {}))
     timings["prepare"] = int((_now() - t0) * 1000)
     return {
@@ -69,7 +74,12 @@ async def _prepare(state: AgentState) -> AgentState:
 def _make_narrate(narrator: Narrator):
     def _narrate(state: AgentState) -> AgentState:
         t0 = _now()
-        draft, usage = narrator.narrate(state["changeset"], state["facts"])
+        with trace.observe("narrate", "generation", model=getattr(narrator, "name", "?"),
+                           input={"facts": len(state["facts"])}) as gen:
+            draft, usage = narrator.narrate(state["changeset"], state["facts"])
+            trace.update(gen, output={"statements": len(draft.statements)},
+                         usage_details={"input": usage.get("input_tokens", 0),
+                                        "output": usage.get("output_tokens", 0)})
         timings = dict(state.get("timings_ms", {}))
         timings["narrate"] = int((_now() - t0) * 1000)
         return {"draft": draft, "usage": usage, "timings_ms": timings}
@@ -78,7 +88,13 @@ def _make_narrate(narrator: Narrator):
 
 def _verify(state: AgentState) -> AgentState:
     t0 = _now()
-    verified = verify_draft(state["draft"], state["facts"])
+    with trace.observe("verify", "guardrail") as gd:
+        verified = verify_draft(state["draft"], state["facts"])
+        passed = sum(1 for v in verified if v.ok)
+        trace.update(gd, output={"passed": passed, "dropped": len(verified) - passed})
+    if verified:
+        trace.score("verification_pass_rate", passed / len(verified),
+                    comment=f"{passed}/{len(verified)} claims verified")
     timings = dict(state.get("timings_ms", {}))
     timings["verify"] = int((_now() - t0) * 1000)
     warnings = list(state.get("warnings", []))
@@ -118,12 +134,18 @@ def verification_stats(verified: list[VerifiedStatement]) -> dict[str, int]:
 
 async def run(patient_uuid: str, narrator: Optional[Narrator] = None) -> AgentState:
     graph = build_graph(narrator)
+    cid = uuid.uuid4().hex[:12]
     init: AgentState = {
         "patient_uuid": patient_uuid,
-        "correlation_id": uuid.uuid4().hex[:12],
+        "correlation_id": cid,
         "timings_ms": {}, "warnings": [],
     }
     t0 = _now()
-    out: AgentState = await graph.ainvoke(init)
+    with trace.observe("uc1_previsit_synthesis", "agent",
+                       input={"patient_uuid": patient_uuid},
+                       metadata={"correlation_id": cid}) as root:
+        out: AgentState = await graph.ainvoke(init)
+        trace.update(root, output={"summary_chars": len(out.get("summary_md", ""))})
     out["timings_ms"]["wall"] = int((_now() - t0) * 1000)
+    trace.flush()
     return out
