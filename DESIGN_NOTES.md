@@ -293,6 +293,62 @@ Python + httpx + pydantic; no LLM yet):
   resolve D-9 (reference-range table) as the verification layer is built; refine
   the vitals component parser for BP.
 
+## Build log — agent layer (UC-1 + verification gate) (2026-07-31)
+
+Second increment built and proven. The whole pre-visit synthesis runs as a
+LangGraph graph, and the LLM is deliberately kept **out of the truth path**.
+
+- **Graph** (`app/agent.py`): `prepare → narrate → verify → render → END`, each
+  run carrying a `correlation_id` and recording per-node latency, token usage, and
+  verification pass/fail counts.
+  - `prepare` (deterministic): parallel FHIR pull → `compute_changes` → fact index.
+  - `narrate`: the **swappable** LLM step (`app/llm.py`). `ClaudeNarrator` calls
+    Claude with **forced structured tool-use** (can only return a `SummaryDraft`);
+    `StubNarrator` is a faithful deterministic narrator needing **no API key**, so
+    the graph + gate run in CI and eval without tokens. `get_narrator()` picks
+    Claude iff `ANTHROPIC_API_KEY` is set, else the stub. Graph/gate are identical
+    either way.
+  - `verify`: the gate. Fails **closed** — unverifiable statements are dropped and
+    logged, never shown.
+  - `render`: composes the briefing, **injecting value + reference + provenance +
+    source_id deterministically** from the ChangeSet (D-8), not from the model.
+- **UC-1 change detection** (`app/changes.py`): finds the prior-visit boundary,
+  lists new problems/meds since it, groups labs by LOINC for trends
+  (`newly_abnormal` / `worsening` / `resolved` / `stable_*`), and surfaces
+  `current_abnormals` + `current_criticals`. `current_abnormals` was added after
+  testing showed a *stably* high creatinine (UC-2 "flag worrisome") would otherwise
+  be missed by a pure delta view; `worsening` fires when an already-abnormal value
+  drifts >2% further out.
+- **Verification gate** (`app/summary.py`) — the graded "verification layer". The
+  LLM emits structured `Statement`s (category, text, `source_ids`,
+  `asserted_status`); the gate enforces three invariants against the ChangeSet:
+  1. **source attribution** — every `source_id` must exist in the change-set;
+  2. **domain constraint** — an asserted lab direction must match the table's
+     verdict (can't call a `high` value `low`, or a `high` value `critical`);
+  3. **no unsourced numbers** — integer/decimal values in a lab claim must appear
+     in a cited fact (values come from the renderer, never the model).
+- **Proven, offline (no key):**
+  - Faithful run (Pfeffer): creatinine rendered as elevated **and** worsening,
+    each line source-attributed with the deterministic value/ref/provenance;
+    12/12 claims verified; full trace emitted (parallel fetch ~2 s each, 3.9 s wall).
+  - Adversarial run (a narrator that invents a source, flips a direction, and
+    fabricates a value): **3 of 4 claims dropped**, only the true one rendered.
+- **Tests** (`tests/`, 23 passing, no live OpenEMR): `test_reference_ranges.py`
+  pins D-9 boundaries (bands, sex-specificity, unit mismatch, pediatric, inverted
+  HDL, target-based cholesterol); `test_verification.py` pins the gate
+  (unknown source, wrong direction incl. the worsening-fact regression, invented
+  integer/decimal value, fabricated critical, category mismatch, full-hallucination
+  block). These are the regression guards the Week-1 rubric asks for.
+- **Deps added:** `langgraph==1.2.10`, `anthropic==0.120.2`, `langfuse==4.14.2`
+  (runtime); `pytest==9.1.1` (dev). Langfuse SDK present but the sink is wired when
+  the self-hosted server is stood up; structured trace fields exist now regardless.
+- **Known limitations / next:** (a) a lab claim citing the *wrong analyte's*
+  source_id with a consistent direction (e.g. "Glucose" text over a creatinine id)
+  is not yet caught — the injected evidence makes it visible, but it belongs in the
+  eval set; (b) run with a real key to capture Claude token/latency baselines;
+  (c) UC-3 conversational Q&A and the Langfuse server are the next surfaces;
+  (d) BP `component[]` parser still TODO.
+
 ### DQ-6 (defect) — malformed placeholder values in the data
 - Some qualitative results imported the literal template string **`{entry.value}`**
   as the value (units `UNK`) — a Synthea/CCDA import artifact, i.e. garbage.
@@ -469,14 +525,30 @@ container (1–2 vCPU) would be slower, especially the parallel case.
 - Consistent with "rules decide, model explains." Matches the abnormality design
   (DQ-2): deterministic module computes/renders facts, LLM handles language.
 
-### D-9. Reference-range provenance — OPEN, the one real verification task
-- DQ-2: data has no ranges/flags, so the agent owns abnormality via a **LOINC → 
-  normal-range** table. **That table needs a credible source**, and must handle
-  **units (our data is metric), age, and sex** (normals differ by all three).
-  Hardcoded guesses = patient-safety hole. **To resolve while building the
-  verification layer.** Candidate sources: standard lab reference tables; encode
-  range + provenance + applicable population per LOINC; flag conservatively;
-  physician-in-the-loop.
+### D-9. Reference-range provenance — RESOLVED (2026-07-31)
+- DQ-2: data has no ranges/flags, so the agent owns abnormality via a **LOINC →
+  normal-range** table handling **units, age, and sex**.
+- **Resolved as** `copilot/app/data/reference_ranges.json` + `reference_ranges.py`:
+  - **Grounded in real data.** LOINC codes/units were pulled from the actual
+    `procedure_result` rows loaded (not guessed), so every code in the table is a
+    code we actually receive. Same analyte under serum vs blood LOINC both mapped.
+  - **Unit-checked:** a value is classified only if its unit matches the table
+    (with aliases); mismatch → `unit_mismatch`, left unclassified. No silent
+    metric/imperial errors.
+  - **Sex-aware:** creatinine, hemoglobin, hematocrit, RBC carry male/female rows.
+  - **Age-aware, fail-safe:** patients < 18 → `pediatric` (adult ranges refused,
+    not misapplied).
+  - **Direction-aware:** `bidirectional` (electrolytes), `higher_better` (eGFR,
+    HDL — only a low flag), `lower_better` (LDL/chol/TG — only a high flag).
+  - **Provenance carried per analyte** and surfaced in the rendered evidence.
+    `_meta.sourcing_policy` states these are conventional adult intervals and that
+    production MUST substitute the performing lab's own ranges when available —
+    this table is the single audited place an abnormality decision is made.
+  - **Non-numeric (DQ-4) and unknown-LOINC** both resolve to explicit statuses
+    (`non_numeric` / `no_range`), never a false "normal". Questionnaire scores and
+    urine dipsticks correctly fall to `no_range`.
+- Proven on Pfeffer (female, b.1951): coherent CKD signal — creatinine ~1.95 vs
+  female ref 0.59–1.04. Boundary behavior pinned in `tests/test_reference_ranges.py`.
 
 ### D-3. Agent UI surface
 - **Status:** OPEN. Likely a separate modern surface (not grafted into Angular

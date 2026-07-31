@@ -1,0 +1,229 @@
+{
+  "_meta": {
+    "purpose": "Resolves D-9. OpenEMR/Synthea lab results carry no reference ranges or abnormal flags (DQ-2), so the co-pilot applies this documented fallback table to classify abnormality deterministically. LOINC-keyed, unit-checked, sex/age-aware.",
+    "sourcing_policy": "These are conventional adult reference intervals drawn from widely published clinical-chemistry consensus (Mayo/ARUP-style adult ranges). Reference intervals are properly the property of the PERFORMING laboratory and instrument; in production these MUST be replaced by the reporting lab's own ranges when the source system provides them. This table is a documented fallback, applied only when the source omits ranges, and it is the single audited place where an abnormality decision can be traced.",
+    "pediatric_policy": "Adult ranges are not valid for patients under 18. When age < 18 the classifier returns no_range rather than applying an adult interval.",
+    "unit_policy": "A value is classified only if the result unit matches the table unit (case/space-insensitive). A unit mismatch returns unit_mismatch and the value is left unclassified.",
+    "version": "2026-07-31"
+  },
+  "analytes": {
+    "glucose": {
+      "display": "Glucose",
+      "unit": "mg/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum/plasma glucose, non-fasting interpretation",
+      "ranges": [{"low": 70, "high": 99, "critical_low": 40, "critical_high": 500}]
+    },
+    "bun": {
+      "display": "Urea nitrogen (BUN)",
+      "unit": "mg/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum urea nitrogen",
+      "ranges": [{"low": 7, "high": 20, "critical_high": 100}]
+    },
+    "creatinine": {
+      "display": "Creatinine",
+      "unit": "mg/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum creatinine, sex-specific",
+      "ranges": [
+        {"sex": "male", "low": 0.74, "high": 1.35, "critical_high": 4.0},
+        {"sex": "female", "low": 0.59, "high": 1.04, "critical_high": 4.0}
+      ]
+    },
+    "calcium": {
+      "display": "Calcium",
+      "unit": "mg/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum total calcium",
+      "ranges": [{"low": 8.6, "high": 10.3, "critical_low": 6.0, "critical_high": 13.0}]
+    },
+    "sodium": {
+      "display": "Sodium",
+      "unit": "mmol/L",
+      "direction": "bidirectional",
+      "source": "Adult serum sodium",
+      "ranges": [{"low": 136, "high": 145, "critical_low": 120, "critical_high": 160}]
+    },
+    "potassium": {
+      "display": "Potassium",
+      "unit": "mmol/L",
+      "direction": "bidirectional",
+      "source": "Adult serum potassium",
+      "ranges": [{"low": 3.5, "high": 5.1, "critical_low": 2.5, "critical_high": 6.5}]
+    },
+    "chloride": {
+      "display": "Chloride",
+      "unit": "mmol/L",
+      "direction": "bidirectional",
+      "source": "Adult serum chloride",
+      "ranges": [{"low": 98, "high": 107}]
+    },
+    "co2": {
+      "display": "Carbon dioxide (total)",
+      "unit": "mmol/L",
+      "direction": "bidirectional",
+      "source": "Adult serum bicarbonate/total CO2",
+      "ranges": [{"low": 22, "high": 29}]
+    },
+    "egfr": {
+      "display": "eGFR (MDRD)",
+      "unit": "mL/min/{1.73_m2}",
+      "unit_aliases": ["mL/min", "mL/min/1.73m2", "mL/min/{1.73_m2}"],
+      "direction": "higher_better",
+      "source": "eGFR: >=60 normal kidney function; <60 suggests CKD; <15 kidney failure",
+      "ranges": [{"low": 60, "critical_low": 15}]
+    },
+    "total_protein": {
+      "display": "Total protein",
+      "unit": "g/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum total protein",
+      "ranges": [{"low": 6.0, "high": 8.3}]
+    },
+    "albumin": {
+      "display": "Albumin",
+      "unit": "g/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum albumin",
+      "ranges": [{"low": 3.5, "high": 5.0}]
+    },
+    "bilirubin_total": {
+      "display": "Bilirubin (total)",
+      "unit": "mg/dL",
+      "direction": "bidirectional",
+      "source": "Adult serum total bilirubin",
+      "ranges": [{"low": 0.1, "high": 1.2, "critical_high": 15.0}]
+    },
+    "cholesterol_total": {
+      "display": "Total cholesterol",
+      "unit": "mg/dL",
+      "direction": "lower_better",
+      "source": "ATP III: desirable <200; borderline 200-239; high >=240",
+      "ranges": [{"high": 200, "critical_high": 240}]
+    },
+    "triglyceride": {
+      "display": "Triglyceride",
+      "unit": "mg/dL",
+      "direction": "lower_better",
+      "source": "ATP III: normal <150; high >=200",
+      "ranges": [{"high": 150, "critical_high": 500}]
+    },
+    "ldl": {
+      "display": "LDL cholesterol",
+      "unit": "mg/dL",
+      "direction": "lower_better",
+      "source": "ATP III: optimal <100; high >=160",
+      "ranges": [{"high": 130, "critical_high": 190}]
+    },
+    "hdl": {
+      "display": "HDL cholesterol",
+      "unit": "mg/dL",
+      "direction": "higher_better",
+      "source": "ATP III: low HDL <40 is a cardiac risk factor",
+      "ranges": [{"low": 40}]
+    },
+    "wbc": {
+      "display": "Leukocytes (WBC)",
+      "unit": "10*3/uL",
+      "unit_aliases": ["10*3/uL", "10^3/uL", "K/uL", "x10E3/uL"],
+      "direction": "bidirectional",
+      "source": "Adult whole-blood WBC automated count",
+      "ranges": [{"low": 4.5, "high": 11.0, "critical_low": 2.0, "critical_high": 30.0}]
+    },
+    "rbc": {
+      "display": "Erythrocytes (RBC)",
+      "unit": "10*6/uL",
+      "unit_aliases": ["10*6/uL", "10^6/uL", "M/uL"],
+      "direction": "bidirectional",
+      "source": "Adult whole-blood RBC automated count, sex-specific",
+      "ranges": [
+        {"sex": "male", "low": 4.5, "high": 5.9},
+        {"sex": "female", "low": 4.1, "high": 5.1}
+      ]
+    },
+    "hemoglobin": {
+      "display": "Hemoglobin",
+      "unit": "g/dL",
+      "direction": "bidirectional",
+      "source": "Adult whole-blood hemoglobin, sex-specific",
+      "ranges": [
+        {"sex": "male", "low": 13.5, "high": 17.5, "critical_low": 7.0},
+        {"sex": "female", "low": 12.0, "high": 15.5, "critical_low": 7.0}
+      ]
+    },
+    "hematocrit": {
+      "display": "Hematocrit",
+      "unit": "%",
+      "direction": "bidirectional",
+      "source": "Adult whole-blood hematocrit, sex-specific",
+      "ranges": [
+        {"sex": "male", "low": 41.0, "high": 53.0},
+        {"sex": "female", "low": 36.0, "high": 46.0}
+      ]
+    },
+    "mcv": {
+      "display": "MCV",
+      "unit": "fL",
+      "direction": "bidirectional",
+      "source": "Adult red cell mean corpuscular volume",
+      "ranges": [{"low": 80, "high": 100}]
+    },
+    "mch": {
+      "display": "MCH",
+      "unit": "pg",
+      "direction": "bidirectional",
+      "source": "Adult mean corpuscular hemoglobin",
+      "ranges": [{"low": 27, "high": 33}]
+    },
+    "mchc": {
+      "display": "MCHC",
+      "unit": "g/dL",
+      "direction": "bidirectional",
+      "source": "Adult mean corpuscular hemoglobin concentration",
+      "ranges": [{"low": 32, "high": 36}]
+    },
+    "platelets": {
+      "display": "Platelets",
+      "unit": "10*3/uL",
+      "unit_aliases": ["10*3/uL", "10^3/uL", "K/uL"],
+      "direction": "bidirectional",
+      "source": "Adult whole-blood platelet automated count",
+      "ranges": [{"low": 150, "high": 400, "critical_low": 50, "critical_high": 1000}]
+    }
+  },
+  "loinc_index": {
+    "2345-7": "glucose",
+    "2339-0": "glucose",
+    "3094-0": "bun",
+    "6299-2": "bun",
+    "2160-0": "creatinine",
+    "38483-4": "creatinine",
+    "17861-6": "calcium",
+    "49765-1": "calcium",
+    "2951-2": "sodium",
+    "2947-0": "sodium",
+    "2823-3": "potassium",
+    "6298-4": "potassium",
+    "2075-0": "chloride",
+    "2069-3": "chloride",
+    "2028-9": "co2",
+    "20565-8": "co2",
+    "33914-3": "egfr",
+    "2885-2": "total_protein",
+    "1751-7": "albumin",
+    "1975-2": "bilirubin_total",
+    "2093-3": "cholesterol_total",
+    "2571-8": "triglyceride",
+    "18262-6": "ldl",
+    "2085-9": "hdl",
+    "6690-2": "wbc",
+    "789-8": "rbc",
+    "718-7": "hemoglobin",
+    "4544-3": "hematocrit",
+    "787-2": "mcv",
+    "785-6": "mch",
+    "786-4": "mchc",
+    "777-3": "platelets"
+  }
+}
