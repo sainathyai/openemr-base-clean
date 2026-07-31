@@ -231,6 +231,13 @@ class StubChat:
                 answer = f"No lab results matching '{term}' with a recorded value in the chart."
 
         violations = check_grounding(answer, citations, self.tools)
+        with trace.observe("uc3_chart_qa", "agent", input={"question": question},
+                           metadata={"provider": "stub", "tools": calls}) as root:
+            trace.update(root, output={"answer": answer, "grounded": not violations})
+        trace.score("grounded", 1.0 if not violations else 0.0,
+                    comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
+                    data_type="BOOLEAN")
+        trace.flush()
         return ChatResult(
             question=question, answer=answer, citations=citations,
             grounded=len(violations) == 0, violations=violations,
