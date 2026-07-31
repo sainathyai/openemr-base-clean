@@ -349,6 +349,37 @@ LangGraph graph, and the LLM is deliberately kept **out of the truth path**.
   (c) UC-3 conversational Q&A and the Langfuse server are the next surfaces;
   (d) BP `component[]` parser still TODO.
 
+## Build log — UC-3 conversational chart Q&A (2026-07-31)
+
+Multi-turn chart Q&A on the same "LLM out of the truth path" principle, built as
+**tool-calling over the already-fetched context** (not a raw context dump — that was
+the PERF token bomb).
+
+- **Grounded tools** (`app/tools.py`): `find_labs`, `list_medications`,
+  `list_problems`, `list_allergies`, `latest_vitals`, `whats_changed` (reuses the
+  UC-1 change-set). Each returns typed, source-attributed rows from the in-memory
+  `PatientContext` and records into a per-turn **grounding ledger** (source_ids,
+  numbers, and result-set cardinalities) so the answer can be checked.
+- **The agent** (`app/chat.py`): `ClaudeChat` runs an Anthropic tool-use loop and
+  must deliver its answer through a structured `respond(answer, citations)` tool,
+  so the same discipline as UC-1 applies. `StubChat` is a keyword-routed offline
+  agent for CI/demo. `get_chat()` picks by `ANTHROPIC_API_KEY`.
+- **Grounding gate** (`check_grounding`): every cited source_id must be one a tool
+  returned this turn; every number in the answer must be in the ledger (values,
+  reference bounds, and counts). **Design choice:** UC-1 (autonomous synthesis)
+  fails CLOSED and drops bad statements; UC-3 (interactive, physician reading live)
+  still shows the answer but **flags it UNGROUNDED** and records the violation.
+- **DQ-6 fixed globally:** `_clean()` in `fhir_client` nulls template placeholders
+  (`{entry.value}`) and empty/`none` values at the FHIR boundary, so malformed
+  values never reach the classifier, tools, or the physician.
+- **Proven offline (stub, Pfeffer):** "most recent creatinine and is it abnormal?"
+  → 1.95 mg/dL high (grounded); "what changed?" → creatinine high + 9 new meds
+  (grounded, counts allowed); "any blood thinners?" → lists meds incl. clopidogrel
+  (grounded); "hemoglobin A1c?" → correctly declines (A1c not in the loaded panel,
+  and the DQ-6 urine-hemoglobin placeholders are now suppressed).
+- **Tests:** `tests/test_chat.py` (7) pin the ledger, the two grounding violations,
+  count-grounding, reset-between-turns, and DQ-6 sanitation. Suite now 30 passing.
+
 ### DQ-6 (defect) — malformed placeholder values in the data
 - Some qualitative results imported the literal template string **`{entry.value}`**
   as the value (units `UNK`) — a Synthea/CCDA import artifact, i.e. garbage.

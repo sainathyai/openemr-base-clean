@@ -52,14 +52,25 @@ def _human_name(res: dict) -> str:
     return f"{given} {n.get('family', '')}".strip()
 
 
+def _clean(v: Optional[str]) -> Optional[str]:
+    # DQ-6: some imported results carry the literal template placeholder
+    # "{entry.value}" (and similar). Never surface these as if they were data.
+    if v is None:
+        return None
+    s = str(v).strip()
+    if not s or s.lower() in {"none", "null"} or ("{" in s and "}" in s):
+        return None
+    return s
+
+
 def _obs_value(res: dict) -> tuple[Optional[str], Optional[str]]:
     if "valueQuantity" in res:
         q = res["valueQuantity"]
-        return (str(q.get("value")), q.get("unit"))
+        return (_clean(str(q.get("value"))), q.get("unit"))
     if "valueString" in res:
-        return (res["valueString"], None)
+        return (_clean(res["valueString"]), None)
     if "valueCodeableConcept" in res:
-        return (_cc_text(res["valueCodeableConcept"]), None)
+        return (_clean(_cc_text(res["valueCodeableConcept"])), None)
     return (None, None)
 
 
