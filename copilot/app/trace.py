@@ -27,6 +27,9 @@ def _client():
         return None
     if not _client_tried:
         _client_tried = True
+        # accept LANGFUSE_BASE_URL as an alias for the SDK's LANGFUSE_HOST
+        if not os.getenv("LANGFUSE_HOST") and os.getenv("LANGFUSE_BASE_URL"):
+            os.environ["LANGFUSE_HOST"] = os.environ["LANGFUSE_BASE_URL"]
         try:
             from langfuse import get_client
             _client_cache = get_client()
