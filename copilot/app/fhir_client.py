@@ -63,6 +63,28 @@ def _clean(v: Optional[str]) -> Optional[str]:
     return s
 
 
+def _fmt_qty(v: Any) -> str:
+    """Render a FHIR quantity value without a spurious trailing .0 (BP is integral)."""
+    try:
+        f = float(v)
+        return str(int(f)) if f.is_integer() else str(f)
+    except (TypeError, ValueError):
+        return str(v)
+
+
+def _norm_bp_unit(u: Optional[str]) -> str:
+    return "mmHg" if (u or "").replace(" ", "") in {"mm[Hg]", "mmHg"} else (u or "mmHg")
+
+
+def _component_qty(res: dict, loinc_code: str) -> Optional[dict]:
+    for c in res.get("component") or []:
+        if _cc_code(c.get("code"), "loinc") == loinc_code:
+            q = c.get("valueQuantity")
+            if q and q.get("value") is not None:
+                return q
+    return None
+
+
 def _obs_value(res: dict) -> tuple[Optional[str], Optional[str]]:
     if "valueQuantity" in res:
         q = res["valueQuantity"]
@@ -71,6 +93,20 @@ def _obs_value(res: dict) -> tuple[Optional[str], Optional[str]]:
         return (_clean(res["valueString"]), None)
     if "valueCodeableConcept" in res:
         return (_clean(_cc_text(res["valueCodeableConcept"])), None)
+    # Blood pressure (and similar panels) carry no top-level value: the reading is
+    # in component[]. Systolic (LOINC 8480-6) over diastolic (8462-4) is rendered as
+    # a single "120/80" vital, so both numbers surface and ground together.
+    if res.get("component"):
+        sys_q = _component_qty(res, "8480-6")
+        dia_q = _component_qty(res, "8462-4")
+        if sys_q and dia_q:
+            return (f"{_fmt_qty(sys_q['value'])}/{_fmt_qty(dia_q['value'])}",
+                    _norm_bp_unit(sys_q.get("unit")))
+        # single meaningful component: fall back to its own value/unit
+        for c in res["component"]:
+            q = c.get("valueQuantity")
+            if q and q.get("value") is not None:
+                return (_clean(_fmt_qty(q["value"])), q.get("unit"))
     return (None, None)
 
 

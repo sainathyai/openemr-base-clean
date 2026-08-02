@@ -4,10 +4,10 @@ A running summary of what was decided and what is built. The detailed reasoning
 lives in `DESIGN_NOTES.md`; the graded deliverables are `AUDIT.md`, `USERS.md`,
 and `ARCHITECTURE.md`. This file is the quick map.
 
-Last updated: 2026-08-01. Branch `feat/clinical-copilot-foundation`, 7 feature
-commits, pushed to the personal fork `sainathyai/openemr-base-clean` (remote
-`fork`; `origin` remains the Gauntlet-HQ base). 34 tests green, plus a 21-case
-golden eval corpus at 21/21.
+Last updated: 2026-08-02. Branch `feat/clinical-copilot-foundation`, pushed to the
+personal fork `sainathyai/openemr-base-clean` (remote `fork`; `origin` remains the
+Gauntlet-HQ base, read-only). 45 tests green, plus a 21-case golden eval corpus at
+21/21.
 
 ## What this is
 
@@ -97,6 +97,15 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
    usage, verify guardrail} plus a `verification_pass_rate` score; UC-3 with tool
    spans and a `grounded` score. `OBSERVABILITY.md` documents the two sink options.
 
+4b. **Blood pressure component parser** (DQ-5). BP Observations carry no top-level
+   value: systolic (LOINC 8480-6) and diastolic (8462-4) live in `component[]`, so
+   BP surfaced as None. `_obs_value` now renders the panel as a single "systolic/
+   diastolic" vital (e.g. `154/88 mmHg`), normalizing `mm[Hg]`, with a single-
+   component fallback. Both numbers land in the grounding ledger. Verified live on
+   the demo patient (154/88, 155/89, ... the hypertensive backfill) and in 10 unit
+   tests. Test-only observability was also silenced (`conftest.py`) so the suite
+   never flushes stub traces to the live Langfuse project.
+
 5. **Golden eval corpus** (`copilot/eval/`). A scored, stub-only corpus that turns
    "the gate worked once" into "the gates hold across the corpus." Two suites: a
    13-case fail-closed gate suite (faithful claims survive; unknown source, flipped
@@ -112,11 +121,12 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
 
 ## Validation state
 
-- 34 tests pass (`copilot/tests/`), no live OpenEMR needed: D-9 boundaries
+- 45 tests pass (`copilot/tests/`), no live OpenEMR needed: D-9 boundaries
   (bands, sex-specificity, unit mismatch, pediatric, inverted HDL, target-based
-  cholesterol) and every gate rejection (unknown source, wrong direction, invented
+  cholesterol), every gate rejection (unknown source, wrong direction, invented
   number, fabricated critical, category mismatch, full-hallucination block, UC-3
-  grounding, DQ-6 sanitation).
+  grounding, DQ-6 sanitation), the BP component parser (DQ-5), and a guard that
+  tracing is off during tests.
 - Golden eval corpus at 21/21 (`copilot/eval/`, `python -m eval.run`):
   verification_pass_rate 1.00, grounded_rate 1.00 on the deterministic path.
   Guarded by `tests/test_eval.py` and a negative-control check.
@@ -134,9 +144,13 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
 
 ## Next
 
-1. DONE. Golden eval corpus at 21/21 (see Build progress 5). Next extension when
-   there is budget: run the same corpus once through real Claude (Haiku) and log the
-   two rates to Langfuse, to confirm the live model also clears the gates.
-2. BP `component[]` parser so blood pressure surfaces (deterministic, no Claude cost).
-3. Decide UC-2, then the agent UI surface (D-3).
+1. DONE. Golden eval corpus at 21/21 (Build progress 5). Next extension when there
+   is budget: run the same corpus once through real Claude (Haiku) and log the two
+   rates to Langfuse, to confirm the live model also clears the gates.
+2. DONE. BP `component[]` parser (Build progress 4b), verified live.
+3. Decide UC-2, then the agent UI surface (D-3). This is now the biggest missing
+   piece: there is no demo-facing surface yet.
 4. Public deploy (D-1).
+5. Backlog data-quality thread: some non-BP vitals (respiratory rate, temperature,
+   O2 sat) surface None on recent draws, likely DQ-6 placeholder values on those
+   entries. Not chased yet.
