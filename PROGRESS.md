@@ -142,15 +142,46 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
 - Configuration in `copilot/.env` (gitignored); template in `.env.example`. Without
   an Anthropic key the deterministic stubs run; without Langfuse keys tracing is off.
 
-## Next
+## Milestone: Week-1 engineering foundation complete
 
-1. DONE. Golden eval corpus at 21/21 (Build progress 5). Next extension when there
-   is budget: run the same corpus once through real Claude (Haiku) and log the two
-   rates to Langfuse, to confirm the live model also clears the gates.
-2. DONE. BP `component[]` parser (Build progress 4b), verified live.
-3. Decide UC-2, then the agent UI surface (D-3). This is now the biggest missing
-   piece: there is no demo-facing surface yet.
-4. Public deploy (D-1).
-5. Backlog data-quality thread: some non-BP vitals (respiratory rate, temperature,
-   O2 sat) surface None on recent draws, likely DQ-6 placeholder values on those
-   entries. Not chased yet.
+Everything that makes the product *trustworthy* is built and proven, end to end,
+against live OpenEMR and in a hermetic test suite. In one line: the co-pilot reads a
+patient's real record over FHIR, computes the clinically important facts
+deterministically, lets Claude narrate only those facts, and verifies every claim
+before it reaches the physician, with the whole path traced for cost and quality.
+
+What is done:
+- **Data access** (D-7): auth as the physician, parallel FHIR pull, filtered and
+  typed, `source_id` on every fact. ~4s versus ~12s serial.
+- **UC-1 pre-visit synthesis** with a verification gate that fails CLOSED. The LLM is
+  out of the truth path (D-8); abnormality is owned by a sourced reference table
+  (D-9). Proven: adversarial narrator has fabrications dropped.
+- **UC-3 conversational Q&A** with a grounding gate that flags any citation or number
+  no tool surfaced.
+- **Observability** (Langfuse): semantic spans, token cost, and quality scores.
+- **Reliability of the evidence:** BP parsed from `component[]` (DQ-5), placeholders
+  scrubbed (DQ-6), a 21-case golden eval corpus (both gates, with a negative
+  control), and 45 hermetic tests. Tests never touch the live Langfuse or spend
+  credits.
+
+Decisions locked for now: D-2, D-4, D-5, D-6, D-7, D-8, D-9 (see the table). Real
+Claude has been validated once on Haiku; the rest runs offline on stubs by design.
+
+## Next phase: deployment and UI
+
+The engineering core is trustworthy but currently *headless* — a grader cannot see
+it. The next phase makes it visible and reachable. Two open decisions gate it:
+
+1. **UC-2 (open):** pick the second interactive use case, since it shapes what the UI
+   must show. This is a product decision to make deliberately.
+2. **Agent UI surface (D-3, open):** a separate modern panel embedded in the patient
+   view, not grafted into OpenEMR's Angular 1.8. This is now the biggest missing
+   piece; it needs a thin serving layer (FastAPI beside `copilot/`) plus the embed.
+3. **Public deploy (D-1, open):** deploy target still to choose; local Docker remains
+   the dev loop.
+
+Deferred backlog (logged, not blocking): run the golden corpus once through real
+Haiku and log the two rates to Langfuse; the eval gate gap where a wrong-analyte
+`source_id` with a consistent direction is not yet caught; and a data-quality thread
+where some non-BP vitals (respiratory rate, temperature, O2 sat) surface None on
+recent draws, likely DQ-6 placeholders on those entries.
