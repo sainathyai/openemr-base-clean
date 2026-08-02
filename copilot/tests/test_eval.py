@@ -34,3 +34,10 @@ def test_corpus_has_meaningful_coverage(suite, minimum):
     sc = run_all()
     _, total = sc.rate(suite)
     assert total >= minimum, f"{suite} suite only has {total} cases"
+
+
+def test_tracing_is_silenced_during_tests():
+    """conftest.py must keep observability off so the suite never flushes synthetic
+    traces into the live Langfuse project (and never spends Claude credits)."""
+    from app import trace
+    assert trace.enabled() is False

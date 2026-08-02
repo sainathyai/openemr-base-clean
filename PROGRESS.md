@@ -4,8 +4,9 @@ A running summary of what was decided and what is built. The detailed reasoning
 lives in `DESIGN_NOTES.md`; the graded deliverables are `AUDIT.md`, `USERS.md`,
 and `ARCHITECTURE.md`. This file is the quick map.
 
-Last updated: 2026-08-01. Branch `feat/clinical-copilot-foundation`, 6 feature
-commits, not pushed (local fork clone, no remote). 34 tests green, plus a 21-case
+Last updated: 2026-08-01. Branch `feat/clinical-copilot-foundation`, 7 feature
+commits, pushed to the personal fork `sainathyai/openemr-base-clean` (remote
+`fork`; `origin` remains the Gauntlet-HQ base). 34 tests green, plus a 21-case
 golden eval corpus at 21/21.
 
 ## What this is
