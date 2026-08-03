@@ -23,6 +23,9 @@ class Settings:
     dev_pass: str = os.getenv("COPILOT_DEV_PASS", "DocPass123!")
     lab_lookback_months: int = int(os.getenv("COPILOT_LAB_LOOKBACK_MONTHS", "18"))
     lab_max: int = int(os.getenv("COPILOT_LAB_MAX", "200"))
+    # Force the deterministic stubs even when an Anthropic key is present. Used for
+    # zero-spend demos/tests and as a kill switch on a shared deployment.
+    force_stub: bool = _bool("COPILOT_FORCE_STUB", False)
 
     @property
     def fhir(self) -> str:

@@ -171,6 +171,23 @@ class FhirClient:
 
     # ------- per-resource reads -------
 
+    async def patients(self, limit: int = 50) -> tuple[list[dict], int]:
+        """Thin patient roster for the UI picker: id, name, birth date, sex.
+        Not shaped into a schema (it is a directory listing, not clinical context)."""
+        b, ms = await self._fetch("Patient", {"_count": str(limit)})
+        out = [
+            {
+                "uuid": r.get("id"),
+                "source_id": f"Patient/{r.get('id')}",
+                "name": _human_name(r),
+                "birth_date": r.get("birthDate"),
+                "sex": r.get("gender"),
+            }
+            for r in self._entries(b)
+        ]
+        out.sort(key=lambda p: p["name"].lower())
+        return out, ms
+
     async def patient(self, uuid: str) -> tuple[Optional[Demographics], int]:
         res, ms = await self._fetch(f"Patient/{uuid}")
         if res.get("resourceType") != "Patient":

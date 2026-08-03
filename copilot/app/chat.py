@@ -259,6 +259,7 @@ def _guess_lab_term(q: str) -> str:
 
 
 def get_chat(ctx: PatientContext):
-    if os.getenv("ANTHROPIC_API_KEY"):
+    from .config import settings
+    if not settings.force_stub and os.getenv("ANTHROPIC_API_KEY"):
         return ClaudeChat(ctx)
     return StubChat(ctx)

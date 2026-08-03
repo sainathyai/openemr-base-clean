@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clinical Co-Pilot</title>
+<style>
+  :root {
+    --bg: #f4f6f9; --panel: #ffffff; --panel-2: #f8fafc; --ink: #0f172a;
+    --muted: #64748b; --line: #e2e8f0; --brand: #1d4ed8; --brand-ink: #ffffff;
+    --ok: #059669; --warn: #b45309; --crit: #b91c1c; --focus: #2563eb;
+    --c-critical:#b91c1c; --c-abnormal_lab:#b45309; --c-trend:#1d4ed8;
+    --c-new_medication:#0f766e; --c-new_problem:#7c3aed; --c-allergy:#c2410c;
+    --c-context:#475569;
+    --radius: 12px; --shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 16px rgba(15,23,42,.06);
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0b1120; --panel:#111827; --panel-2:#0f1830; --ink:#e5edf7;
+      --muted:#93a4bc; --line:#22304a; --brand:#3b82f6; --brand-ink:#0b1120;
+      --c-context:#94a3b8;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#f4f6f9; --panel:#fff; --panel-2:#f8fafc; --ink:#0f172a; --muted:#64748b;
+    --line:#e2e8f0; --brand:#1d4ed8; --brand-ink:#fff; --c-context:#475569;
+  }
+  :root[data-theme="dark"] {
+    --bg:#0b1120; --panel:#111827; --panel-2:#0f1830; --ink:#e5edf7; --muted:#93a4bc;
+    --line:#22304a; --brand:#3b82f6; --brand-ink:#0b1120; --c-context:#94a3b8;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; font-family: var(--sans); color: var(--ink); background: var(--bg);
+    font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .app { display: grid; grid-template-columns: 288px 1fr; height: 100vh; }
+  @media (max-width: 780px) { .app { grid-template-columns: 1fr; } .sidebar { display:none; } }
+
+  /* ---- sidebar ---- */
+  .sidebar { background: var(--panel); border-right: 1px solid var(--line);
+             display: flex; flex-direction: column; min-height: 0; }
+  .brand { padding: 18px 18px 12px; border-bottom: 1px solid var(--line); }
+  .brand h1 { font-size: 15px; margin: 0; letter-spacing: .2px; }
+  .brand .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .roster { overflow-y: auto; padding: 8px; flex: 1; }
+  .roster .hint { color: var(--muted); font-size: 12.5px; padding: 10px 10px; }
+  .pt { display: block; width: 100%; text-align: left; border: 0; background: transparent;
+        color: inherit; padding: 9px 11px; border-radius: 9px; cursor: pointer;
+        font: inherit; }
+  .pt:hover { background: var(--panel-2); }
+  .pt.active { background: color-mix(in srgb, var(--brand) 14%, transparent);
+               outline: 1px solid color-mix(in srgb, var(--brand) 35%, transparent); }
+  .pt .nm { font-weight: 600; font-size: 14px; }
+  .pt .meta { color: var(--muted); font-size: 12px; }
+
+  /* ---- main ---- */
+  .main { min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+  .topbar { padding: 16px 22px; border-bottom: 1px solid var(--line);
+            background: var(--panel); display: flex; align-items: center; gap: 16px; }
+  .topbar .who { min-width: 0; }
+  .topbar .who h2 { margin: 0; font-size: 18px; }
+  .topbar .who .dem { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .topbar .spacer { flex: 1; }
+  .badge { font-size: 12px; padding: 5px 10px; border-radius: 999px; font-weight: 600;
+           border: 1px solid var(--line); background: var(--panel-2); color: var(--muted); }
+  .badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--line)); }
+  .badge.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+  .themebtn { border:1px solid var(--line); background:var(--panel-2); color:var(--muted);
+              border-radius:8px; padding:6px 10px; cursor:pointer; font-size:12px; }
+
+  .tabs { display: flex; gap: 4px; padding: 10px 18px 0; border-bottom: 1px solid var(--line);
+          background: var(--panel); }
+  .tab { border: 0; background: transparent; color: var(--muted); font: inherit;
+         font-weight: 600; font-size: 13.5px; padding: 9px 14px; cursor: pointer;
+         border-bottom: 2px solid transparent; }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+  .content { padding: 22px; overflow-y: auto; flex: 1; min-height: 0; }
+  .placeholder { color: var(--muted); text-align: center; margin-top: 12vh; }
+  .placeholder h3 { color: var(--ink); font-weight: 650; }
+
+  .headline { font-size: 16px; font-weight: 650; margin: 0 0 4px; }
+  .subline { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+
+  /* verification strip */
+  .vstrip { display:flex; align-items:center; gap:12px; padding:12px 14px;
+            background: var(--panel); border:1px solid var(--line);
+            border-radius: var(--radius); margin-bottom: 16px; box-shadow: var(--shadow); }
+  .vstrip .rate { font-weight: 700; }
+  .vstrip .note { color: var(--muted); font-size: 13px; }
+
+  .cards { display: flex; flex-direction: column; gap: 10px; }
+  .card { background: var(--panel); border: 1px solid var(--line);
+          border-left: 3px solid var(--cat, var(--line));
+          border-radius: var(--radius); padding: 13px 15px; box-shadow: var(--shadow); }
+  .card .cat { font-size: 11px; font-weight: 700; letter-spacing: .5px;
+               text-transform: uppercase; color: var(--cat, var(--muted)); }
+  .card .txt { margin-top: 3px; }
+  .chips { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: var(--mono); font-size: 11px; color: var(--muted);
+          background: var(--panel-2); border: 1px solid var(--line);
+          border-radius: 6px; padding: 2px 7px; }
+
+  details.dropped { margin-top: 18px; border:1px dashed color-mix(in srgb,var(--warn) 45%,var(--line));
+                    border-radius: var(--radius); background: color-mix(in srgb,var(--warn) 6%, transparent);
+                    padding: 6px 14px; }
+  details.dropped summary { cursor: pointer; font-weight: 600; color: var(--warn);
+                            padding: 8px 0; font-size: 13.5px; }
+  .drop { padding: 8px 0; border-top: 1px solid var(--line); }
+  .drop .dt { text-decoration: line-through; color: var(--muted); }
+  .drop .vi { font-family: var(--mono); font-size: 12px; color: var(--crit); margin-top: 3px; }
+
+  /* chat */
+  .chat { display: flex; flex-direction: column; height: 100%; }
+  .msgs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+          padding-bottom: 8px; }
+  .msg { max-width: 760px; }
+  .msg.user { align-self: flex-end; text-align: right; }
+  .bubble { display: inline-block; padding: 10px 14px; border-radius: 14px;
+            border: 1px solid var(--line); background: var(--panel); text-align: left;
+            box-shadow: var(--shadow); }
+  .msg.user .bubble { background: var(--brand); color: var(--brand-ink); border-color: transparent; }
+  .msg .meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .g-ok { color: var(--ok); font-weight: 600; }
+  .g-bad { color: var(--crit); font-weight: 600; }
+  .composer { display: flex; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line);
+              margin-top: 8px; }
+  .composer input { flex: 1; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line);
+                    background: var(--panel); color: var(--ink); font: inherit; }
+  .composer input:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+  button.go { border: 0; background: var(--brand); color: var(--brand-ink); font: inherit;
+              font-weight: 650; padding: 0 18px; border-radius: 10px; cursor: pointer; }
+  button.go:disabled { opacity: .5; cursor: default; }
+  .suggest { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 12px; }
+  .suggest button { border:1px solid var(--line); background:var(--panel-2); color:var(--muted);
+                    border-radius:999px; padding:6px 12px; font:inherit; font-size:12.5px; cursor:pointer; }
+  .suggest button:hover { color: var(--ink); }
+
+  .spin { display:inline-block; width:14px; height:14px; border:2px solid var(--line);
+          border-top-color: var(--brand); border-radius:50%; animation: sp .7s linear infinite;
+          vertical-align:-2px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  .err { color: var(--crit); background: color-mix(in srgb,var(--crit) 8%,transparent);
+         border:1px solid color-mix(in srgb,var(--crit) 30%,var(--line));
+         border-radius: var(--radius); padding: 12px 14px; }
+  .soon { display:inline-block; font-size:11px; font-weight:700; color:var(--muted);
+          border:1px solid var(--line); border-radius:6px; padding:1px 6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Clinical Co-Pilot</h1>
+      <div class="sub" id="brandsub">loading&hellip;</div>
+    </div>
+    <nav class="roster" id="roster"><div class="hint">Loading patients&hellip;</div></nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="who">
+        <h2 id="ptname">Select a patient</h2>
+        <div class="dem" id="ptdem">&nbsp;</div>
+      </div>
+      <div class="spacer"></div>
+      <span class="badge" id="trustbadge" hidden></span>
+      <button class="themebtn" id="theme">◐ theme</button>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="briefing">Pre-visit briefing</button>
+      <button class="tab" data-tab="chat">Ask the chart</button>
+      <button class="tab" data-tab="order">Order check <span class="soon">UC-2</span></button>
+    </div>
+
+    <section class="content" id="content">
+      <div class="placeholder">
+        <h3>Pick a patient to begin</h3>
+        <p>The co-pilot reads the record over FHIR, computes what changed, and verifies
+           every claim before showing it.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const el = (t, c, txt) => { const e = document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
+const state = { patients: [], selected: null, tab: "briefing", cache: {} };
+
+async function fetchJSON(url, opts) {
+  const r = await fetch(url, opts);
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(body.detail || (r.status + " " + r.statusText));
+  return body;
+}
+function ageFrom(bd) {
+  if (!bd) return null;
+  const d = new Date(bd); if (isNaN(d)) return null;
+  const t = new Date(); let a = t.getFullYear()-d.getFullYear();
+  if (t.getMonth()<d.getMonth() || (t.getMonth()==d.getMonth() && t.getDate()<d.getDate())) a--;
+  return a;
+}
+function demLine(p) {
+  const bits = []; const a = ageFrom(p.birth_date);
+  if (a!=null) bits.push(a + "y");
+  if (p.sex) bits.push(p.sex);
+  if (p.birth_date) bits.push("DOB " + p.birth_date);
+  return bits.join(" · ");
+}
+
+/* ---------- boot ---------- */
+async function boot() {
+  try {
+    const h = await fetchJSON("/api/health");
+    $("#brandsub").textContent = "narrator: " + h.narrator;
+  } catch (e) { $("#brandsub").textContent = "server unreachable"; }
+  try {
+    const { patients } = await fetchJSON("/api/patients");
+    state.patients = patients;
+    renderRoster();
+  } catch (e) {
+    $("#roster").innerHTML = "";
+    const d = el("div","err"); d.textContent = "Could not load patients: " + e.message;
+    $("#roster").appendChild(d);
+  }
+}
+function renderRoster() {
+  const box = $("#roster"); box.innerHTML = "";
+  if (!state.patients.length) { box.appendChild(el("div","hint","No patients found.")); return; }
+  state.patients.forEach(p => {
+    const b = el("button","pt");
+    b.appendChild(el("div","nm", p.name));
+    b.appendChild(el("div","meta", demLine(p) || " "));
+    b.onclick = () => selectPatient(p, b);
+    box.appendChild(b);
+  });
+}
+function selectPatient(p, btn) {
+  state.selected = p;
+  document.querySelectorAll(".pt").forEach(x => x.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  $("#ptname").textContent = p.name;
+  $("#ptdem").textContent = demLine(p) || " ";
+  $("#trustbadge").hidden = true;
+  render();
+}
+
+/* ---------- tabs ---------- */
+$("#tabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab"); if (!t) return;
+  state.tab = t.dataset.tab;
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x===t));
+  render();
+});
+function render() {
+  if (!state.selected) return;
+  if (state.tab === "briefing") renderBriefing();
+  else if (state.tab === "chat") renderChat();
+  else renderOrder();
+}
+
+/* ---------- UC-1 briefing ---------- */
+async function renderBriefing() {
+  const c = $("#content"); const uuid = state.selected.uuid;
+  c.innerHTML = ""; c.appendChild(loading("Reading the chart and verifying claims…"));
+  try {
+    const b = await fetchJSON(`/api/patients/${uuid}/briefing`);
+    if (state.selected.uuid !== uuid) return;
+    paintBriefing(b);
+  } catch (e) { showError(c, e); }
+}
+function paintBriefing(b) {
+  const c = $("#content"); c.innerHTML = "";
+  c.appendChild(withText(el("div","headline"), b.headline || "Pre-visit briefing"));
+  const sub = "Last visit " + (b.last_visit_date || "n/a")
+            + (b.prior_visit_date ? " · prior " + b.prior_visit_date : "")
+            + " · narrator " + (b.meta.narrator || "?");
+  c.appendChild(withText(el("div","subline"), sub));
+
+  const v = b.meta.verification;
+  const strip = el("div","vstrip");
+  strip.appendChild(withText(el("span","rate"), `${v.passed}/${v.claims} claims verified`));
+  strip.appendChild(withText(el("span","note"),
+    v.dropped ? `${v.dropped} unverifiable claim(s) dropped before display` : "no claims dropped"));
+  c.appendChild(strip);
+
+  const badge = $("#trustbadge");
+  badge.hidden = false;
+  badge.className = "badge " + (v.dropped ? "warn" : "ok");
+  badge.textContent = v.dropped ? `gate active · ${v.dropped} dropped` : "all claims verified";
+
+  const cards = el("div","cards");
+  if (!b.statements.length) cards.appendChild(withText(el("div","subline"),
+    "No notable changes since the prior visit."));
+  b.statements.forEach(s => {
+    const card = el("div","card"); card.style.setProperty("--cat", `var(--c-${s.category})`);
+    card.appendChild(withText(el("div","cat"), s.category.replace(/_/g," ")));
+    card.appendChild(withText(el("div","txt"), s.text));
+    if (s.source_ids && s.source_ids.length) {
+      const chips = el("div","chips");
+      s.source_ids.forEach(id => chips.appendChild(withText(el("span","chip"), id)));
+      card.appendChild(chips);
+    }
+    cards.appendChild(card);
+  });
+  c.appendChild(cards);
+
+  if (b.dropped && b.dropped.length) {
+    const d = el("details","dropped");
+    d.appendChild(withText(el("summary"), `${b.dropped.length} claim(s) dropped by the verification gate`));
+    b.dropped.forEach(x => {
+      const row = el("div","drop");
+      row.appendChild(withText(el("div","dt"), `[${x.category}] ${x.text}`));
+      x.violations.forEach(vi => row.appendChild(withText(el("div","vi"), `✗ ${vi.rule}: ${vi.detail}`)));
+      d.appendChild(row);
+    });
+    c.appendChild(d);
+  }
+}
+
+/* ---------- UC-3 chat ---------- */
+const SUGGEST = ["What changed since the last visit?", "Any allergies?",
+                 "What is the latest creatinine?", "Is the patient on a blood thinner?"];
+function renderChat() {
+  const c = $("#content"); const uuid = state.selected.uuid;
+  if (!state.cache[uuid]) state.cache[uuid] = { chat: [] };
+  c.innerHTML = "";
+  const wrap = el("div","chat");
+  const sug = el("div","suggest");
+  SUGGEST.forEach(q => { const bt = el("button",null,q); bt.onclick = () => sendChat(q); sug.appendChild(bt); });
+  wrap.appendChild(sug);
+  const msgs = el("div","msgs"); msgs.id = "msgs"; wrap.appendChild(msgs);
+  const comp = el("div","composer");
+  const inp = el("input"); inp.id = "chatin"; inp.placeholder = "Ask about this patient's chart…";
+  inp.autocomplete = "off";
+  inp.addEventListener("keydown", e => { if (e.key==="Enter") sendChat(inp.value); });
+  const go = el("button","go","Ask"); go.id="chatgo"; go.onclick = () => sendChat(inp.value);
+  comp.appendChild(inp); comp.appendChild(go);
+  wrap.appendChild(comp);
+  c.appendChild(wrap);
+  state.cache[uuid].chat.forEach(m => appendMsg(m));
+  inp.focus();
+}
+function appendMsg(m) {
+  const msgs = $("#msgs"); if (!msgs) return;
+  const box = el("div","msg " + m.role);
+  box.appendChild(withText(el("div","bubble"), m.text));
+  if (m.role === "assistant" && m.meta) {
+    const meta = el("div","meta");
+    const g = el("span", m.grounded ? "g-ok" : "g-bad", m.grounded ? "✓ grounded" : "⚠ ungrounded");
+    meta.appendChild(g);
+    if (m.citations && m.citations.length) meta.appendChild(document.createTextNode("  ·  " + m.citations.join(", ")));
+    if (m.tool_calls && m.tool_calls.length) meta.appendChild(document.createTextNode("  ·  tools: " + m.tool_calls.join(", ")));
+    box.appendChild(meta);
+  }
+  msgs.appendChild(box); msgs.scrollTop = msgs.scrollHeight;
+}
+async function sendChat(q) {
+  q = (q||"").trim(); if (!q || !state.selected) return;
+  const uuid = state.selected.uuid;
+  $("#chatin").value = ""; $("#chatgo").disabled = true;
+  state.cache[uuid].chat.push({ role:"user", text:q }); appendMsg({ role:"user", text:q });
+  const pend = { role:"assistant", text:"…", pending:true };
+  const msgs = $("#msgs"); const box = el("div","msg assistant");
+  const bub = el("div","bubble"); bub.innerHTML = '<span class="spin"></span> thinking…';
+  box.appendChild(bub); msgs.appendChild(box); msgs.scrollTop = msgs.scrollHeight;
+  try {
+    const r = await fetchJSON(`/api/patients/${uuid}/chat`, {
+      method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ question:q }) });
+    box.remove();
+    const m = { role:"assistant", text:r.answer, meta:true, grounded:r.grounded,
+                citations:r.citations, tool_calls:r.tool_calls };
+    state.cache[uuid].chat.push(m); appendMsg(m);
+  } catch (e) {
+    box.remove();
+    const m = { role:"assistant", text:"Error: " + e.message, meta:true, grounded:false, citations:[] };
+    appendMsg(m);
+  } finally { $("#chatgo").disabled = false; $("#chatin") && $("#chatin").focus(); }
+}
+
+/* ---------- UC-2 order check (form ready; result rendering lands next) ---------- */
+function renderOrder() {
+  const c = $("#content"); c.innerHTML = "";
+  c.appendChild(withText(el("div","headline"), "Order safety check"));
+  c.appendChild(withText(el("div","subline"),
+    "Enter a proposed medication or order. The co-pilot checks it against allergies, "
+    + "renal function, duplicate therapy, and the active problem list — every line cited."));
+  const comp = el("div","composer"); comp.style.marginTop = "0";
+  const inp = el("input"); inp.id="orderin"; inp.placeholder = "e.g. Lisinopril 10 mg daily";
+  const go = el("button","go","Check"); go.onclick = () => runOrder(inp.value);
+  inp.addEventListener("keydown", e => { if (e.key==="Enter") runOrder(inp.value); });
+  comp.appendChild(inp); comp.appendChild(go);
+  c.appendChild(comp);
+  const out = el("div"); out.id = "orderout"; out.style.marginTop = "16px"; c.appendChild(out);
+}
+async function runOrder(text) {
+  text = (text||"").trim(); if (!text || !state.selected) return;
+  const out = $("#orderout"); out.innerHTML = ""; out.appendChild(loading("Checking order…"));
+  try {
+    const r = await fetchJSON(`/api/patients/${state.selected.uuid}/order-check`, {
+      method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ order_text:text }) });
+    out.innerHTML = ""; out.appendChild(withText(el("pre"), JSON.stringify(r, null, 2)));
+  } catch (e) {
+    out.innerHTML = "";
+    const box = el("div","err");
+    box.textContent = e.message.includes("not implemented")
+      ? "The order-check engine is being built next — the form and endpoint are wired, the safety logic lands in the next commit."
+      : "Error: " + e.message;
+    out.appendChild(box);
+  }
+}
+
+/* ---------- helpers ---------- */
+function withText(node, t) { node.textContent = t; return node; }
+function loading(t) { const d = el("div","subline"); d.innerHTML = '<span class="spin"></span> ' + t; return d; }
+function showError(c, e) { c.innerHTML = ""; const d = el("div","err"); d.textContent = e.message; c.appendChild(d); }
+
+/* theme toggle */
+$("#theme").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const next = cur === "dark" ? "light" : cur === "light" ? "dark"
+             : (matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", next);
+};
+
+boot();
+</script>
+</body>
+</html>

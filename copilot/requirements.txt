@@ -5,3 +5,7 @@ python-dotenv==1.0.1
 langgraph==1.2.10
 anthropic==0.120.2
 langfuse==4.14.2
+# serving layer (D-3): FastAPI serves the API and the static SPA in one process,
+# so the deployed footprint is one uvicorn worker (fits the t3.micro target).
+fastapi==0.115.5
+uvicorn==0.32.1

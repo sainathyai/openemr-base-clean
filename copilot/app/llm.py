@@ -131,7 +131,10 @@ def _changeset_for_llm(cs: ChangeSet, facts: dict[str, Fact]) -> dict:
 
 
 def get_narrator() -> Narrator:
-    """Claude if a key is configured, else the deterministic stub."""
+    """Claude if a key is configured (and stubs are not forced), else the stub."""
+    from .config import settings
+    if settings.force_stub:
+        return StubNarrator()
     if os.getenv("ANTHROPIC_API_KEY"):
         return ClaudeNarrator()
     return StubNarrator()

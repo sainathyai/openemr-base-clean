@@ -7,7 +7,10 @@ and `ARCHITECTURE.md`. This file is the quick map.
 Last updated: 2026-08-02. Branch `feat/clinical-copilot-foundation`, pushed to the
 personal fork `sainathyai/openemr-base-clean` (remote `fork`; `origin` remains the
 Gauntlet-HQ base, read-only). 45 tests green, plus a 21-case golden eval corpus at
-21/21.
+21/21. Now in the deployment/UI phase: a FastAPI serving layer + single-page UI is
+live locally, driving UC-1 and UC-3 in the browser on real FHIR data. Deploy target
+chosen: a single AWS EC2 t3.micro (free tier). Second interactive use case chosen:
+UC-2 order safety check (logic lands next).
 
 ## What this is
 
@@ -34,9 +37,9 @@ physician. We build to an enterprise-grade bar, not to the letter of the brief.
 
 | ID | Decision | Status |
 |----|----------|--------|
-| D-1 | Local Docker for dev; public deploy is a later stage | Decided; deploy open |
+| D-1 | Local Docker for dev; public deploy on a single AWS EC2 t3.micro (free tier). One box runs the trimmed OpenEMR compose + the copilot serving layer; 2-4 GB swap, DB restored from dump not re-imported, Caddy for real TLS. RDS-micro for the DB is the fallback if 1 GB is too tight | Target chosen; not yet deployed |
 | D-2 | Agent authenticates AS the physician via OAuth2; inherits OpenEMR AAA (role + resource-type scopes), never reimplements authz | Proven end to end |
-| D-3 | Agent UI surface: a separate modern surface embedded in the patient view, not grafted into OpenEMR's Angular 1.8 | Open |
+| D-3 | Agent UI surface: a separate modern surface, not grafted into OpenEMR's Angular 1.8. Built as a FastAPI serving layer (`copilot/server/`) that serves the API and a single-page UI from ONE uvicorn process (no Node runtime, so it fits the t3.micro budget). Standalone page + patient picker for now; iframe-into-the-patient-screen is a later refinement | Building |
 | D-4 | Synthetic data via OpenEMR's built-in Synthea CCDA importer, not hand-rolled inserts | Resolved |
 | D-5 | Trust boundary is the hospital/clinic DEPLOYMENT, not the physician. OpenEMR has no row-level patient walls and that is intended (multisite = per-DB tenancy; staff turnover and cross-cover make per-physician walls wrong). Agent does role + resource-type (+ facility) scoping and audit logging | Decided |
 | D-6 | Agent is a READER of the consolidated record, not an integrator. It does not pull live from pharmacies or external specialists; interoperability is OpenEMR's job | Decided |
@@ -119,6 +122,21 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
    Langfuse scores; `tests/test_eval.py` runs it in CI. A negative-control check
    confirms the harness fails when an expectation is wrong, so green is meaningful.
 
+6. **Serving layer + UI shell (D-3)** (`copilot/server/`). A thin FastAPI app that
+   wraps the existing agents and serves a single-page UI from the same process (one
+   uvicorn worker, ~150-250 MB, so it fits the t3.micro target). No new clinical
+   logic: endpoints call `agent.run` (UC-1), `get_chat` (UC-3), and a patient roster
+   read, then serialise the typed results. The UI is a patient picker plus three
+   surfaces: the pre-visit briefing (verified statement cards with deterministic
+   evidence, source-id chips, a trust badge, and a collapsible list of the claims the
+   gate dropped, so the verification is visible), the chart-Q&A chat (per-answer
+   grounded/ungrounded badge + citations), and the order-check form (UC-2, wired to a
+   stub endpoint pending its logic). Verified live end to end on the 20-patient set
+   with `COPILOT_FORCE_STUB=1`: briefing 12/12 on Pfeffer, 14/14 on Aracely, chat
+   grounded across change-set/allergy/lab questions, all with zero Claude spend. A new
+   `COPILOT_FORCE_STUB` switch forces the deterministic stubs even when a key is set,
+   for zero-spend demos/tests and as a deployment kill switch.
+
 ## Validation state
 
 - 45 tests pass (`copilot/tests/`), no live OpenEMR needed: D-9 boundaries
@@ -167,21 +185,28 @@ What is done:
 Decisions locked for now: D-2, D-4, D-5, D-6, D-7, D-8, D-9 (see the table). Real
 Claude has been validated once on Haiku; the rest runs offline on stubs by design.
 
-## Next phase: deployment and UI
+## Deployment and UI phase (in progress)
 
-The engineering core is trustworthy but currently *headless* — a grader cannot see
-it. The next phase makes it visible and reachable. Two open decisions gate it:
+The headless core is now reachable and visible: the FastAPI serving layer + UI shell
+(build item 6) drive UC-1 and UC-3 in the browser on live FHIR data. The two decisions
+that gated this phase are made: UC-2 is the order safety check, and the deploy target
+is a single AWS EC2 t3.micro (D-1). Remaining work, in order:
 
-1. **UC-2 (open):** pick the second interactive use case, since it shapes what the UI
-   must show. This is a product decision to make deliberately.
-2. **Agent UI surface (D-3, open):** a separate modern panel embedded in the patient
-   view, not grafted into OpenEMR's Angular 1.8. This is now the biggest missing
-   piece; it needs a thin serving layer (FastAPI beside `copilot/`) plus the embed.
-3. **Public deploy (D-1, open):** deploy target still to choose; local Docker remains
-   the dev loop.
+1. **UC-2 order-safety logic:** the third surface. Physician enters a proposed
+   medication/order; a deterministic engine checks it against allergies, renal
+   function (reuses the D-9 reference table on creatinine/eGFR), duplicate therapy,
+   and the active problem list, and the LLM narrates the already-computed findings.
+   Same fail-closed/flag trust model, no new truth path. The form and endpoint are
+   already wired; only the engine and its serialiser remain.
+2. **Server tests:** hermetic tests for the serving layer (`_briefing_payload`
+   serialiser, the order-check engine) alongside the existing 45. No live OpenEMR.
+3. **Public deploy (D-1):** provision the t3.micro (swap, trimmed compose, DB restore,
+   Caddy/TLS, OAuth redirect URIs), then point it at the same compose the dev loop
+   uses. Bring `COPILOT_FORCE_STUB` off only when a Claude budget is confirmed.
 
 Deferred backlog (logged, not blocking): run the golden corpus once through real
 Haiku and log the two rates to Langfuse; the eval gate gap where a wrong-analyte
-`source_id` with a consistent direction is not yet caught; and a data-quality thread
+`source_id` with a consistent direction is not yet caught; a data-quality thread
 where some non-BP vitals (respiratory rate, temperature, O2 sat) surface None on
-recent draws, likely DQ-6 placeholders on those entries.
+recent draws, likely DQ-6 placeholders on those entries; and multi-turn chat memory
+(the chat endpoint is currently single-turn/stateless, which is fine for the demo).
