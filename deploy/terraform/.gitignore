@@ -1,0 +1,7 @@
+# Never commit state (may contain sensitive values) or local var files.
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+crash.log

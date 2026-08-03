@@ -1,0 +1,2 @@
+# For fleet.py (fleet start/stop/status) and migration helpers.
+boto3>=1.34

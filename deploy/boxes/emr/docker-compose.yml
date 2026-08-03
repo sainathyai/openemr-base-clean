@@ -1,0 +1,28 @@
+# EMR tier (Box 2). Our baked OpenEMR image from ECR (stock flex base + assembled
+# htdocs). Self-contained: no source mount, no rebuild. The baked sqlconf uses
+# $host='mysql'; extra_hosts maps that name to the DB box's private IP. site_addr_oath
+# is set to how the agent addresses this box, so OAuth issuer + FHIR line up.
+services:
+  openemr:
+    image: ${EMR_IMAGE:?set EMR_IMAGE to the ECR OpenEMR image}
+    restart: always
+    extra_hosts:
+      - "mysql:${DB_HOST:?set DB_HOST to the DB box private IP}"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASS: ${DB_ROOT_PASSWORD:?same as the DB box}
+      MYSQL_USER: openemr
+      MYSQL_PASS: openemr
+      OE_USER: admin
+      OE_PASS: ${OE_PASS:-pass}
+      OPENEMR_SETTING_site_addr_oath: 'https://${EMR_HOST:?set EMR_HOST to the EMR private IP}'
+    ports:
+      - "443:443"            # security group restricts this to the agent box
+    # No volume over /sites: the config + keys are baked into the image (source of truth).
+    healthcheck:
+      test: ["CMD", "/usr/bin/curl", "--fail", "--insecure", "--silent",
+             "https://localhost/apis/default/fhir/metadata"]
+      start_period: 8m       # first boot regenerates the autoloader (one-time)
+      interval: 1m
+      timeout: 10s
+      retries: 5

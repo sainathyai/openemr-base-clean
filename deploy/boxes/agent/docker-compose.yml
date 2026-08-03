@@ -1,0 +1,37 @@
+# Agent tier (Box 3). Our Co-Pilot image from ECR in LIVE mode (FHIR to the EMR box)
+# behind Caddy (auto-TLS). This is the ONLY tier you redeploy as you iterate:
+#   docker compose pull copilot && docker compose up -d copilot
+services:
+  copilot:
+    image: ${AGENT_IMAGE:?set AGENT_IMAGE to the ECR agent image}
+    restart: always
+    environment:
+      COPILOT_FIXTURES: ""             # clear the image default -> LIVE FHIR
+      COPILOT_FORCE_STUB: "1"          # deterministic narration, no Claude spend (public URL)
+      OPENEMR_BASE: "https://${EMR_HOST:?set EMR_HOST to the EMR box private IP}"
+      OPENEMR_VERIFY_TLS: "false"
+      COPILOT_CLIENT_ID: ${COPILOT_CLIENT_ID:?}
+      COPILOT_CLIENT_SECRET: ${COPILOT_CLIENT_SECRET:?}
+      COPILOT_DEV_USER: ${COPILOT_DEV_USER:-drhouse}
+      COPILOT_DEV_PASS: ${COPILOT_DEV_PASS:?}
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2
+    restart: always
+    depends_on:
+      - copilot
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      COPILOT_DOMAIN: ${COPILOT_DOMAIN:?set COPILOT_DOMAIN to your subdomain}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data: {}
+  caddy_config: {}

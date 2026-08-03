@@ -1,0 +1,49 @@
+# Local validation of the three deploy images together, mirroring the 3-box wiring
+# BEFORE anything touches AWS. The DB service is named 'mysql' so OpenEMR's baked
+# sqlconf ($host='mysql') resolves; the agent runs LIVE against the baked EMR.
+#   docker compose --env-file .env up -d      (then hit http://localhost:8001)
+name: copilot-teststack
+services:
+  mysql:
+    image: copilot-db:local
+    environment:
+      MARIADB_ROOT_PASSWORD: testroot
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 90s
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  openemr:
+    image: copilot-emr:local
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASS: testroot
+      MYSQL_USER: openemr
+      MYSQL_PASS: openemr
+      OE_USER: admin
+      OE_PASS: pass
+      # match the address the agent uses, so OAuth issuer/FHIR line up
+      OPENEMR_SETTING_site_addr_oath: 'https://openemr'
+    ports:
+      - "9443:443"
+
+  copilot:
+    image: clinical-copilot:latest
+    depends_on:
+      - openemr
+    environment:
+      COPILOT_FIXTURES: ""            # LIVE FHIR against the baked EMR
+      COPILOT_FORCE_STUB: "1"         # deterministic, no Claude spend
+      OPENEMR_BASE: "https://openemr"
+      OPENEMR_VERIFY_TLS: "false"
+      COPILOT_CLIENT_ID: ${COPILOT_CLIENT_ID}
+      COPILOT_CLIENT_SECRET: ${COPILOT_CLIENT_SECRET}
+      COPILOT_DEV_USER: ${COPILOT_DEV_USER}
+      COPILOT_DEV_PASS: ${COPILOT_DEV_PASS}
+    ports:
+      - "8001:8000"

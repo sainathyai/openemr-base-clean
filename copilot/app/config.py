@@ -26,6 +26,9 @@ class Settings:
     # Force the deterministic stubs even when an Anthropic key is present. Used for
     # zero-spend demos/tests and as a kill switch on a shared deployment.
     force_stub: bool = _bool("COPILOT_FORCE_STUB", False)
+    # When set to a directory, the app reads patient data from captured fixtures
+    # instead of a live OpenEMR (the Path-B public demo). Empty = live FHIR.
+    fixtures_dir: str = os.getenv("COPILOT_FIXTURES", "")
 
     @property
     def fhir(self) -> str:

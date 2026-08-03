@@ -1,0 +1,2216 @@
+{
+  "patient_id": "a261274d-48d2-4d8b-ab59-5b69e9e0197f",
+  "demographics": {
+    "source_id": "Patient/a261274d-48d2-4d8b-ab59-5b69e9e0197f",
+    "name": "Wilford267 Blanda868",
+    "birth_date": "1970-10-04",
+    "sex": "male"
+  },
+  "problems": [
+    {
+      "source_id": "Condition/a2612754-9f8a-41c0-92d5-45dc202bc0fa",
+      "code": null,
+      "text": "Educated to high school level (finding)",
+      "onset": "1988-11-27",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9f8e-4ae7-be86-750949d4df7b",
+      "code": null,
+      "text": "Essential hypertension (disorder)",
+      "onset": "1992-12-06",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9f92-4637-a9f9-9a1214ef18f0",
+      "code": null,
+      "text": "Body mass index 30+ - obesity (finding)",
+      "onset": "1992-12-06",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9f96-4e0e-96b2-bb2fcf847000",
+      "code": null,
+      "text": "Loss of teeth (disorder)",
+      "onset": "1996-01-14",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9f9a-4959-b315-3d8acbfe3150",
+      "code": null,
+      "text": "Chronic sinusitis (disorder)",
+      "onset": "2001-01-05",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9f9e-4beb-940a-671ab9549550",
+      "code": null,
+      "text": "Localized, primary osteoarthritis of the hand (disorder)",
+      "onset": "2010-04-25",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9fa2-4120-9568-1621b8042858",
+      "code": null,
+      "text": "Full-time employment (finding)",
+      "onset": "2014-04-13",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fa5-4792-846d-48783046ad5f",
+      "code": null,
+      "text": "Stress (finding)",
+      "onset": "2014-08-24",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fa9-4660-96da-7660a130adb5",
+      "code": null,
+      "text": "Has a criminal record (finding)",
+      "onset": "2014-08-24",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-9fad-4c48-b51d-6592dee1bd47",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2017-04-30",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fb1-4928-ac8c-39488b1936de",
+      "code": null,
+      "text": "Part-time employment (finding)",
+      "onset": "2017-04-30",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fb5-40ad-976f-2ae078c5391b",
+      "code": null,
+      "text": "Victim of intimate partner abuse (finding)",
+      "onset": "2017-04-30",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fb9-4b85-a90a-beea6df037be",
+      "code": null,
+      "text": "Full-time employment (finding)",
+      "onset": "2018-05-06",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fbd-4fea-aae2-0765c2a1416e",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2019-05-12",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fc1-4104-bdb0-a0db8e191ed8",
+      "code": null,
+      "text": "Gingivitis (disorder)",
+      "onset": "2019-05-12",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fc4-481c-a99d-9d5447dcd5a0",
+      "code": null,
+      "text": "Gingival disease (disorder)",
+      "onset": "2019-05-26",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fc8-4e13-8166-bb624703a97e",
+      "code": null,
+      "text": "Gingivitis (disorder)",
+      "onset": "2020-05-17",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fcc-4f3d-9145-148c4d71ba76",
+      "code": null,
+      "text": "Gingival disease (disorder)",
+      "onset": "2020-05-31",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fd0-4db6-8ec8-274992e31845",
+      "code": null,
+      "text": "Primary dental caries (disorder)",
+      "onset": "2020-05-31",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fd4-4880-a98b-7f893079c106",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2021-05-23",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fda-4fbb-ba63-c5ea00c6a1ca",
+      "code": null,
+      "text": "Not in labor force (finding)",
+      "onset": "2021-05-23",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fdf-4936-9dd1-cfadb5ff12a7",
+      "code": null,
+      "text": "Stress (finding)",
+      "onset": "2021-05-23",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fe3-4a6b-9115-873c9c925d95",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2022-05-29",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fe7-4968-9f56-ecbbc7c89da3",
+      "code": null,
+      "text": "Full-time employment (finding)",
+      "onset": "2022-05-29",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9feb-424c-b347-7c3ea73cd080",
+      "code": null,
+      "text": "Acute bronchitis (disorder)",
+      "onset": "2023-01-12",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9fef-40ad-9f2f-bdba53258759",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2023-06-04",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9ff3-4ad3-a414-1e06532a4350",
+      "code": null,
+      "text": "Stress (finding)",
+      "onset": "2023-06-04",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9ff7-46f6-819a-0aa6b7f85f28",
+      "code": null,
+      "text": "Gingivitis (disorder)",
+      "onset": "2023-06-04",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9ffb-4879-b8a1-331304bd8a96",
+      "code": null,
+      "text": "Unemployed (finding)",
+      "onset": "2024-06-09",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-9ffe-4962-a3be-6c92b12f4a11",
+      "code": null,
+      "text": "Sleep disorder (disorder)",
+      "onset": "2024-09-20",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-a002-411b-982d-22f33fe2e072",
+      "code": null,
+      "text": "Sleep apnea (disorder)",
+      "onset": "2024-10-06",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-a006-4cad-a1d1-2f34dbc3c0f1",
+      "code": null,
+      "text": "Part-time employment (finding)",
+      "onset": "2025-06-15",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-a00a-4789-8973-47c3dcd9268e",
+      "code": null,
+      "text": "Stress (finding)",
+      "onset": "2025-06-15",
+      "clinical_status": "Active"
+    },
+    {
+      "source_id": "Condition/a2612754-a00e-4b8d-ae83-d3a3e4d8b9dd",
+      "code": null,
+      "text": "Acute bronchitis (disorder)",
+      "onset": "2026-02-20",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-a012-443b-90fa-809391e6dfd4",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2026-03-01",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-a016-4a61-b525-f67d6a609529",
+      "code": null,
+      "text": "Full-time employment (finding)",
+      "onset": "2026-03-01",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-a01b-4968-bc82-f77125c7ba20",
+      "code": null,
+      "text": "Medication review due (situation)",
+      "onset": "2026-06-21",
+      "clinical_status": "Inactive"
+    },
+    {
+      "source_id": "Condition/a2612754-a020-44b4-9808-27999c0f5189",
+      "code": null,
+      "text": "Part-time employment (finding)",
+      "onset": "2026-06-21",
+      "clinical_status": "Active"
+    }
+  ],
+  "medications": [
+    {
+      "source_id": "MedicationRequest/a2612755-af8a-4cb7-bd1b-b38a76113c29",
+      "code": "849574",
+      "text": "Naproxen sodium 220 MG Oral Tablet",
+      "status": "active",
+      "authored_on": "2010-04-25"
+    },
+    {
+      "source_id": "MedicationRequest/a2612755-af8d-4dc2-bce8-4fbf4f8e245a",
+      "code": "308136",
+      "text": "amLODIPine 2.5 MG Oral Tablet",
+      "status": "completed",
+      "authored_on": "2016-04-24"
+    },
+    {
+      "source_id": "MedicationRequest/a2612755-af90-4e01-a948-64427f687c67",
+      "code": "1535362",
+      "text": "sodium fluoride 0.0272 MG/MG Oral Gel",
+      "status": "completed",
+      "authored_on": "2020-05-31"
+    },
+    {
+      "source_id": "MedicationRequest/a2612755-af93-4c6c-bbd3-61ecfd27f52d",
+      "code": "313782",
+      "text": "Acetaminophen 325 MG Oral Tablet",
+      "status": "completed",
+      "authored_on": "2023-01-12"
+    },
+    {
+      "source_id": "MedicationRequest/a2612754-9f7b-491c-9c4c-375396a0087b",
+      "code": null,
+      "text": "Naproxen sodium 220 MG Oral Tablet",
+      "status": "active",
+      "authored_on": "2026-07-30"
+    },
+    {
+      "source_id": "MedicationRequest/a2612754-9f7f-4b0a-8af3-7e3c7a16b6e4",
+      "code": null,
+      "text": "amLODIPine 2.5 MG Oral Tablet",
+      "status": "completed",
+      "authored_on": "2026-07-30"
+    },
+    {
+      "source_id": "MedicationRequest/a2612754-9f82-4c84-987d-c00ec87561fd",
+      "code": null,
+      "text": "sodium fluoride 0.0272 MG/MG Oral Gel",
+      "status": "completed",
+      "authored_on": "2026-07-30"
+    },
+    {
+      "source_id": "MedicationRequest/a2612754-9f86-4f7b-af8c-4bab27c9e959",
+      "code": null,
+      "text": "Acetaminophen 325 MG Oral Tablet",
+      "status": "completed",
+      "authored_on": "2026-07-30"
+    }
+  ],
+  "labs": [
+    {
+      "source_id": "Observation/a2612763-c097-408e-bf46-1ca271d48482",
+      "loinc": "2093-3",
+      "name": "Cholesterol [Mass/volume] in Serum or Plasma",
+      "value": "218.4",
+      "unit": "mg/dL",
+      "effective": "2025-06-15T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c09d-4943-9f82-600f8c1af37a",
+      "loinc": "2571-8",
+      "name": "Triglyceride [Mass/volume] in Serum or Plasma",
+      "value": "101.26",
+      "unit": "mg/dL",
+      "effective": "2025-06-15T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0a3-4bbd-8436-d349d0babc25",
+      "loinc": "18262-6",
+      "name": "Cholesterol in LDL [Mass/volume] in Serum or Plasma by Direct assay",
+      "value": "141.65",
+      "unit": "mg/dL",
+      "effective": "2025-06-15T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0a9-4575-a993-d7a0626a0d02",
+      "loinc": "2085-9",
+      "name": "Cholesterol in HDL [Mass/volume] in Serum or Plasma",
+      "value": "56.49",
+      "unit": "mg/dL",
+      "effective": "2025-06-15T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0af-4b7b-a7ee-c62f9a869abf",
+      "loinc": "55758-7",
+      "name": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
+      "value": "1",
+      "unit": "{score}",
+      "effective": "2025-06-15T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0b5-408a-b822-50f035a38a7c",
+      "loinc": "70274-6",
+      "name": "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]",
+      "value": "3",
+      "unit": "{score}",
+      "effective": "2026-03-01T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0ba-4912-b3c6-656a62f22527",
+      "loinc": "76504-0",
+      "name": "Total score [HARK]",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0c0-4cd1-b1ce-c3e1eb92a75c",
+      "loinc": "55758-7",
+      "name": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
+      "value": "1",
+      "unit": "{score}",
+      "effective": "2026-03-01T00:00:00Z"
+    },
+    {
+      "source_id": "Observation/a2612763-c0c6-47bd-bf73-f835a7f18e76",
+      "loinc": "75626-2",
+      "name": "Total score [AUDIT-C]",
+      "value": "1",
+      "unit": "{score}",
+      "effective": "2026-06-21T00:00:00Z"
+    }
+  ],
+  "vitals": [
+    {
+      "source_id": "Observation/a262afaa-07fc-4b47-b4dc-83686e5003b6",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b16-4f10-ab38-fffa267a4d30",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfe6-479e-bdec-3803165ca08a",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "69",
+      "unit": "/min",
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39ff-4464-b42f-2e85b2769105",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b77e-47a2-b5d5-d49a6311a954",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-425b-467b-98ef-33e7265697c3",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2d4-464d-9d84-a2ebd090b96c",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2592-4e34-8263-cd402d01e4bd",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7abd-40ad-ac74-56a737a3a963",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d758-4181-98cb-f754f41ee929",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "81.8",
+      "unit": "lb_av",
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3149-47cf-846d-e00eec1e78de",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.7",
+      "unit": "kg/m2",
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f9f-42d4-9f9b-9063a9825f51",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "149/87",
+      "unit": "mmHg",
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc4d-4163-990d-a2bc56af43e8",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53f4-44dd-9d4b-846466515fb6",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adf9-48da-a8c5-de687214aaa1",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-06-21T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07f9-4ade-b357-20bf57e1b8f9",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b13-49e8-9e25-9dc8e74c8764",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfe3-4bd2-b345-9feab0757789",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "73",
+      "unit": "/min",
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39fb-4672-a92a-85a835bec8cd",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b777-45a2-a022-24f2522d1ffd",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4258-4b37-bdb7-4dff64c91512",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2d1-4a78-9028-1a1b141933dd",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-258f-422a-a970-7351a75b0963",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aba-45c6-916c-12f68fbee0a2",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d755-4c7c-b7d1-340628e9f6fa",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.2",
+      "unit": "lb_av",
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3146-44be-bb82-21e4a64406cc",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.2",
+      "unit": "kg/m2",
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f9c-4266-b98e-75a60cb1db48",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "156/91",
+      "unit": "mmHg",
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc4a-4908-9e9e-0185d1e17408",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53f0-4e0a-a672-4421927c5dec",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adf7-490b-9cc2-234998cf9d72",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07f6-4348-b2ea-e04a05276520",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b10-4f15-83b2-f0ac58b0e3f0",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfe0-4a8d-9cac-54e5591ebaa3",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "73",
+      "unit": "/min",
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39f4-4d72-a724-2f7b5d810ce3",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b76c-486f-ade4-fc11ac91de08",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4255-4bfa-b3c5-66687a8a3d70",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2cd-4ca1-b8d9-0e7456287fa5",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-258c-43b9-b90a-faeafb32e5ac",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7ab7-4f07-bf1c-0de77e73887b",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d751-4276-96cd-01ce4dc3ce3b",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.3",
+      "unit": "lb_av",
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3143-49a6-a0c9-d34d3b813709",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.2",
+      "unit": "kg/m2",
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f99-468b-ba0f-ff05c03a363c",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "146/84",
+      "unit": "mmHg",
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc47-4e1f-9a38-d25070b2cd56",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53ed-4047-81ec-8ad96bd251e5",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adf4-4740-9451-a31b95859e14",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-03-01T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07f3-4ca9-a034-5636f9cb0a98",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b0c-49b7-bd22-35e886e35e93",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfdd-4836-8b68-46a4156bcbc8",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "66",
+      "unit": "/min",
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39f1-48d4-83d3-319d907bf29d",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b768-4351-91b6-647bc97a1fc8",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4252-457d-8118-1318e0fc4283",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2ca-4ded-91c7-50ee413c916f",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2589-493f-94e7-5814c9f7052c",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7ab4-45bd-a28c-7ee43c721e82",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d74e-4bc4-9eef-bf6bc164a115",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.3",
+      "unit": "lb_av",
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3140-41f1-bd11-b549cbdbe363",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.2",
+      "unit": "kg/m2",
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f96-4c9e-bfdf-20a48dc9c1bc",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "152/86",
+      "unit": "mmHg",
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc44-4ef7-b27e-7ab36fc710d8",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53ea-436b-9672-6327c51630da",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adf1-4d26-8459-76b3af9c291f",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2026-02-20T07:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07f0-428c-b9c0-105533f26aca",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b09-40e8-ad30-b3af3548264a",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfda-45c8-b645-6cb18bb0bde2",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "71",
+      "unit": "/min",
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39ed-41cd-b8e0-3c30ca00a4eb",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b764-4b24-beba-84792f4ebb53",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-424f-42bf-bf0a-53fa0df36478",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2c1-4a10-a984-10e120f32729",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2587-45f7-a430-236b67d9babe",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7ab1-45fb-ae5d-563871683359",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d74b-4021-9efe-70d9bc739e23",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.2",
+      "unit": "lb_av",
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-313d-4732-869a-53133c994e8a",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.2",
+      "unit": "kg/m2",
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f93-435e-b26d-5a0d18ad6214",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "149/84",
+      "unit": "mmHg",
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc41-4593-a3af-477f36b7b3e7",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53e7-4789-8f25-c911215becb4",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adee-4fa5-a212-373790365be8",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2025-06-15T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07ed-4362-ab76-d925a568bb2c",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b06-44ab-983d-e021fef23708",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfd8-4660-855e-166e8c1ba870",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "59",
+      "unit": "/min",
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39e9-41c0-864b-865a01631c96",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b75f-41e6-a0ea-219053d6bcee",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afac-424c-482e-8f48-066a4320dbbf",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2b6-4be5-bc6c-4c684ef6bdc3",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2584-4384-a9e8-496516e4aeec",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aaf-44fb-a93c-a011b142a288",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d748-44c4-83da-369855290281",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "82.1",
+      "unit": "lb_av",
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afae-313b-4be3-adc5-fe867ebb4727",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.8",
+      "unit": "kg/m2",
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f90-4dfc-a2c3-dd38775e1d74",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "147/83",
+      "unit": "mmHg",
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc3e-4325-8193-1b9f67323572",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53e4-49d5-8e11-9887394ea594",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-adeb-42b0-9767-3606b9138fe1",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-10-05T19:35:17Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07ea-4b7a-8f59-d150a483a811",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b03-4a98-85bb-f1e8c8b14616",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfd5-4223-b2df-78ecd805274f",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "62",
+      "unit": "/min",
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39e6-4c71-bda0-47d3c1f0264e",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b757-4c97-94c5-462960ae225f",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afac-424a-4aa4-b12b-492a8006c33b",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2b1-4eb7-92cb-f47a749fbd4d",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2581-42c8-82ba-e7b8515078f2",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aac-43d2-a616-9b16e921e222",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d745-4fd9-8a32-754777261355",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "81.7",
+      "unit": "lb_av",
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3138-43c8-bcef-cc0a65cd1d28",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.7",
+      "unit": "kg/m2",
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f8c-480f-829f-9f7c441d4b65",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "149/87",
+      "unit": "mmHg",
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc3a-48a5-beca-ae25891bdea2",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53e1-47c4-8481-43d6b6faa202",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-ade8-4d88-807b-cb06ca166848",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-28T19:04:06Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07e7-439e-90a7-2f2ba080d138",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6b00-4c94-b0ae-20c57c88d12d",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfd2-461f-b52f-1c55cf7d4824",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "54",
+      "unit": "/min",
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39e1-4102-b5f0-8cf9b12ec08f",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b74c-4ae2-8d60-421508cb833c",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4247-4272-8c3e-8fc4c33080e6",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2ab-48cd-8da6-7e2c03bb4fca",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-257e-4cf2-ab71-41a60785a579",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aa9-42de-a2f1-165d19f231a1",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d742-41c7-b986-678a1c7839c7",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "81.9",
+      "unit": "lb_av",
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3135-45a2-9d69-d44cee779b29",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.7",
+      "unit": "kg/m2",
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f89-4b7d-b8ef-f96ece70428c",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "150/88",
+      "unit": "mmHg",
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc37-4f28-a425-bd13196f1621",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53de-4456-9038-21368730d2f1",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-ade6-4588-8ef4-de1f74dc350e",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-09-20T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07e4-4335-9af2-ed43a891c16d",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6afd-466b-a186-a25275d5569b",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfcf-4fb3-9654-82afa5603961",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "57",
+      "unit": "/min",
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39dd-4228-8ee5-26af925c4e76",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b741-4f40-b488-2d6af5ba15d9",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4244-4e61-8e4d-f23f45a37497",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2a5-4597-8fe4-08e649c53c3e",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-257b-4ada-9506-3875b7d3f080",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aa6-42df-b96a-99614973f840",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d73f-4b80-825c-dd329d61f23f",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "81.8",
+      "unit": "lb_av",
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3132-4649-8cba-2d43d68c8ff8",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.7",
+      "unit": "kg/m2",
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f86-4806-869e-a8dc77f59fa6",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "145/85",
+      "unit": "mmHg",
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc34-4296-ba15-07a7b8c7ff6b",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53db-4513-9a65-95f6c7d44f68",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-ade3-4194-89bb-a92abe88f0af",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2024-06-09T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07e0-4747-b170-9f8d93dc0492",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6afa-4e2f-b3a2-5e6a92a387c9",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfcc-4bd7-9663-7b49bec2331e",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "63",
+      "unit": "/min",
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39da-4723-bdad-05c423bfda8c",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b72f-4d66-952e-271acbafda7f",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4241-4929-b141-97fc7876f4c5",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b2a0-41fd-8a54-a0d237155f3a",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2579-48e3-a867-d19d81c8ce4c",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aa3-43ec-9f7f-96014fcdfd97",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d73c-45f6-8a22-e1f17f022a27",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.5",
+      "unit": "lb_av",
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-312f-4c57-be52-323663867bf7",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.3",
+      "unit": "kg/m2",
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f83-4b20-befb-994fbe9c3e2a",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "145/83",
+      "unit": "mmHg",
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc31-47c9-8168-5b91b19a69e9",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53d8-4bde-93e7-1bd3c6b9cbe0",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-addf-45f6-9911-25a4888db15c",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-18T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07dd-4efc-a3fe-96ee2e670547",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6af7-47de-b826-ef3285837d83",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfc9-4053-aaac-fa1bfa24bee6",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "56",
+      "unit": "/min",
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39d7-4684-aaae-9926b8925d70",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b72a-4923-8764-bbff645ea463",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-423e-4ddf-835a-6b6c23457ced",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b29b-49af-b219-9f0fc41280b4",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2576-4fb3-9b45-e0296c486b9a",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7aa1-48ae-bbec-170a9db69ebf",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d739-4ed9-bca1-0a87abe9d454",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "82.3",
+      "unit": "lb_av",
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-312d-4679-b3cc-484c92821653",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.9",
+      "unit": "kg/m2",
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f80-4b2e-bfcc-8e59f75e3c85",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "142/84",
+      "unit": "mmHg",
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc2e-4a31-85e4-e0d6f6a593a2",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53d5-4bd4-ba11-687f8682802d",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-addb-40f6-9062-6d3cd79f261b",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-06-04T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07da-4bd5-aa27-3720a072dffd",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6af4-49aa-8e28-6f2ba10f1035",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfc7-463e-811a-838cf8f58fa0",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "61",
+      "unit": "/min",
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39d4-4cbd-bb61-9a88f5d7f426",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b725-4e2a-bdbd-9b9436f22416",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afac-423a-4abd-978a-72472da54876",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b295-40a1-b55e-c779dab4c91c",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2573-4ca4-90a3-a4272c3a7f8d",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7a9e-49ce-a4a0-00fe1308f1de",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d736-4b0b-bb6f-21f6a88671f1",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "81.8",
+      "unit": "lb_av",
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afae-312a-44f4-95c0-d02f1c045ca4",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "27.7",
+      "unit": "kg/m2",
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f7d-4107-a8c5-c1102c17eb16",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "149/85",
+      "unit": "mmHg",
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc2b-4880-9300-07ab30f023f4",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53d2-4fdb-8bb2-3ce8c05085c3",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-add9-45da-a91c-24c52925f66f",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2023-01-12T20:00:10Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07d7-4425-92ca-80470a6cb88b",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6af1-42c8-9aaa-8601c95feb3f",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfc4-4a0e-ac75-67f15b136a76",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "71",
+      "unit": "/min",
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39d0-4936-ba34-8093d556adcb",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b71e-4b5b-8369-b42c5fd15f19",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-4237-453e-9cb9-16ec211037bf",
+      "loinc": "8310-5",
+      "name": "Body Temperature",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afac-b290-45e6-8269-09d9a6f636f4",
+      "loinc": "8327-9",
+      "name": "Temperature Location",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-2570-4f0e-88be-263443bce0cc",
+      "loinc": "8302-2",
+      "name": "Body height",
+      "value": "171.8",
+      "unit": "in_i",
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-7a9b-4f55-9fbf-04e4621c23b3",
+      "loinc": "9843-4",
+      "name": "Head Occipital-frontal circumference",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afad-d733-4dbc-b170-cd7858d817b0",
+      "loinc": "29463-7",
+      "name": "Body weight",
+      "value": "83.9",
+      "unit": "lb_av",
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-3127-4613-81e7-8fabce23484d",
+      "loinc": "39156-5",
+      "name": "Body mass index (BMI) [Ratio]",
+      "value": "28.4",
+      "unit": "kg/m2",
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-9f7a-4517-8fa6-e41bcc2b5947",
+      "loinc": "85354-9",
+      "name": "Blood pressure systolic and diastolic",
+      "value": "145/83",
+      "unit": "mmHg",
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afae-fc28-406a-8561-6761139c1be2",
+      "loinc": "8289-1",
+      "name": "Head Occipital-frontal circumference Percentile",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-53ce-40e3-ab96-21000d62e01c",
+      "loinc": "59576-9",
+      "name": "Body mass index (BMI) [Percentile] Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaf-add6-4448-b0da-a47795dac762",
+      "loinc": "77606-2",
+      "name": "Weight-for-length Per age and sex",
+      "value": null,
+      "unit": null,
+      "effective": "2022-05-29T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-07d4-4c98-856c-1c7ffab60968",
+      "loinc": "85353-1",
+      "name": "Vital signs, weight, height, head circumference, oxygen saturation and BMI panel",
+      "value": null,
+      "unit": null,
+      "effective": "2021-07-11T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-6aee-424f-b765-7246c593935a",
+      "loinc": "9279-1",
+      "name": "Respiratory Rate",
+      "value": null,
+      "unit": null,
+      "effective": "2021-07-11T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afaa-cfc1-4c3f-afe6-4e10d18f7aec",
+      "loinc": "8867-4",
+      "name": "Heart rate",
+      "value": "63",
+      "unit": "/min",
+      "effective": "2021-07-11T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-39cd-465f-854a-5d2adb8360ec",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2021-07-11T18:12:03Z"
+    },
+    {
+      "source_id": "Observation/a262afab-b71a-4854-9bdf-2a0948f49f0c",
+      "loinc": "2708-6",
+      "name": "oxygen_saturation",
+      "value": null,
+      "unit": null,
+      "effective": "2021-07-11T18:12:03Z"
+    }
+  ],
+  "encounters": [
+    {
+      "source_id": "Encounter/a2612753-7d58-46c6-a8ae-5b3de3976729",
+      "date": "2026-06-21T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d51-47a7-b450-eadf499f219f",
+      "date": "2026-03-15T18:12:03Z",
+      "reason": "Encounter for check up (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d46-443e-9196-6c39c0c8fbe0",
+      "date": "2026-03-01T18:12:03Z",
+      "reason": "Encounter for check up (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d42-4eb6-baaa-d7a829e51a33",
+      "date": "2026-02-20T07:12:03Z",
+      "reason": "Encounter for symptom (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d3e-4b1e-81ea-9639abcab5bd",
+      "date": "2025-06-15T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d3a-4580-996b-63af729a7bf0",
+      "date": "2024-10-05T19:35:17Z",
+      "reason": "Follow-up visit (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d36-43ff-9841-393ef54a47d2",
+      "date": "2024-09-28T19:04:06Z",
+      "reason": "Encounter for symptom (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d32-4ee6-a159-21568501818f",
+      "date": "2024-09-20T18:12:03Z",
+      "reason": "Encounter for symptom (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d2e-4601-9e31-431ea3e7e53a",
+      "date": "2024-06-09T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d2b-4766-9eb9-c217bab8423c",
+      "date": "2023-06-18T18:12:03Z",
+      "reason": "Encounter for check up (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d27-417b-812a-92a84839bfab",
+      "date": "2023-06-04T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d23-4a56-9c5e-65d8c3261e5a",
+      "date": "2023-01-12T20:00:10Z",
+      "reason": "Encounter for symptom (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d1f-4c04-8be8-fbbf3814f1b1",
+      "date": "2022-05-29T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d1b-4dbb-aa9d-d6f568af218e",
+      "date": "2021-07-11T18:12:03Z",
+      "reason": "Administration of vaccine to produce active immunity (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d17-410b-b90c-1ce8ed091b61",
+      "date": "2021-06-20T18:12:03Z",
+      "reason": "Administration of vaccine to produce active immunity (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d13-464d-b6fc-2b02fd731f2b",
+      "date": "2021-05-23T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d0f-42a7-9b19-10a5d0414f69",
+      "date": "2020-05-31T18:12:03Z",
+      "reason": "Encounter for check up (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d0c-4aca-be6b-0f054b49e820",
+      "date": "2020-05-17T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d08-4a25-a834-bbce639e643c",
+      "date": "2019-05-26T18:12:03Z",
+      "reason": "Encounter for check up (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d04-4d01-b8d7-6886474f70fa",
+      "date": "2019-05-12T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7d00-475f-9c8f-22e0e481b5fd",
+      "date": "2019-03-20T00:42:45Z",
+      "reason": "Follow-up encounter (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cfc-4664-ada9-9f75d28a4fe6",
+      "date": "2019-03-05T23:33:35Z",
+      "reason": "Encounter for problem (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cf8-4956-bb43-3f30d180dcb9",
+      "date": "2018-05-06T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cf4-4c5a-a71a-7f82e3fe60f6",
+      "date": "2017-04-30T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cf0-4bf9-96b4-aedd8b89d440",
+      "date": "2016-04-24T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cec-414e-ae4c-955cf6ca1010",
+      "date": "2014-08-24T18:12:03Z",
+      "reason": "Urgent care clinic (environment)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7ce8-4f32-933b-f5c9a40c0658",
+      "date": "2014-04-13T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7ce4-4f4b-84c2-89c03f9ecfb7",
+      "date": "2010-04-25T18:12:03Z",
+      "reason": "Encounter for problem (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7ce0-4f39-811c-b0ee06ceb7b6",
+      "date": "2001-01-05T01:12:03Z",
+      "reason": "Encounter for symptom (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cdc-45f5-9866-a20ba704e3b2",
+      "date": "1996-01-14T18:12:03Z",
+      "reason": "Encounter for problem (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cd8-4f64-a2ce-b3c3a8c9bb34",
+      "date": "1992-12-06T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    },
+    {
+      "source_id": "Encounter/a2612753-7cd4-4719-ba39-4af08e768474",
+      "date": "1988-11-27T18:12:03Z",
+      "reason": "General examination of patient (procedure)",
+      "type": "Encounter for check up (procedure)"
+    }
+  ],
+  "allergies": [],
+  "fetch_ms": {
+    "patient": 10644,
+    "conditions": 5643,
+    "medications": 3726,
+    "labs": 14199,
+    "vitals": 7614,
+    "encounters": 1864,
+    "allergies": 9044
+  },
+  "warnings": []
+}

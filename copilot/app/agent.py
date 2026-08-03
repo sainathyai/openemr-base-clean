@@ -23,7 +23,7 @@ from langgraph.graph import END, StateGraph
 
 from . import trace
 from .changes import ChangeSet, compute_changes
-from .fhir_client import FhirClient
+from .datasource import get_data_client
 from .llm import Narrator, get_narrator
 from .summary import (
     Fact, SummaryDraft, VerifiedStatement, build_facts, render_summary, verify_draft,
@@ -51,7 +51,7 @@ def _now() -> float:
 async def _prepare(state: AgentState) -> AgentState:
     t0 = _now()
     with trace.observe("prepare", "span") as sp:
-        client = FhirClient()
+        client = get_data_client()
         try:
             ctx = await client.get_context(state["patient_uuid"])
         finally:

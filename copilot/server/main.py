@@ -27,7 +27,7 @@ from starlette.concurrency import run_in_threadpool
 
 from app.agent import run as run_uc1
 from app.chat import get_chat
-from app.fhir_client import FhirClient
+from app.datasource import get_data_client
 from app.llm import get_narrator
 from app.order_safety import check_order
 from app.schemas import PatientContext
@@ -48,7 +48,7 @@ async def _get_context(uuid: str) -> PatientContext:
     hit = _ctx_cache.get(uuid)
     if hit and now - hit[0] < _CTX_TTL:
         return hit[1]
-    client = FhirClient()
+    client = get_data_client()
     try:
         ctx = await client.get_context(uuid)
     finally:
@@ -80,7 +80,7 @@ async def health() -> dict[str, Any]:
 
 @app.get("/api/patients")
 async def patients() -> dict[str, Any]:
-    client = FhirClient()
+    client = get_data_client()
     try:
         roster, ms = await client.patients()
     except (httpx.HTTPError, RuntimeError) as e:

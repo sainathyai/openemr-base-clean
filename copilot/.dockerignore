@@ -1,0 +1,21 @@
+# Keep the image small and free of secrets/test-only code.
+.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+eval/
+scripts/
+conftest.py
+run_agent.py
+run_chat.py
+run_context.py
+run_server.py
+.env
+.env.*
+!.env.example
+OBSERVABILITY.md
+TESTING.md
+Dockerfile
+.dockerignore

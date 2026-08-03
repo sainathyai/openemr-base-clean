@@ -1,0 +1,6 @@
+# Caddy auto-issues a Let's Encrypt cert for your domain and proxies to the Co-Pilot.
+# Requires: the domain's A record points at this box, and 80 + 443 are open.
+{$COPILOT_DOMAIN} {
+	encode gzip
+	reverse_proxy copilot:8000
+}

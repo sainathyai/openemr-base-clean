@@ -1,0 +1,27 @@
+# DB tier (Box 1). Our seeded MariaDB image from ECR (data baked in via initdb).
+# On first 'up' with an empty volume it loads the seed; data then persists.
+services:
+  mysql:
+    image: ${DB_IMAGE:?set DB_IMAGE to the ECR seeded MariaDB image}
+    restart: always
+    command:
+      - mariadbd
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --innodb-buffer-pool-size=256M
+      - --max-connections=100
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?set DB_ROOT_PASSWORD in .env}
+    ports:
+      - "3306:3306"          # security group restricts this to the EMR box
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 120s
+      interval: 30s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dbdata: {}

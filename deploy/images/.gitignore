@@ -1,0 +1,4 @@
+# Large build artifacts and data seeds (regenerable; images ship via ECR).
+emr/context/
+db/initdb/*.sql.gz
+test-stack/.env
