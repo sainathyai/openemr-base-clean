@@ -29,6 +29,7 @@ from app.agent import run as run_uc1
 from app.chat import get_chat
 from app.fhir_client import FhirClient
 from app.llm import get_narrator
+from app.order_safety import check_order
 from app.schemas import PatientContext
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -179,7 +180,7 @@ async def chat(uuid: str, body: ChatIn) -> dict[str, Any]:
     }
 
 
-# ---------- UC-2: order safety (endpoint stub; logic lands next) ----------
+# ---------- UC-2: order safety ----------
 
 class OrderIn(BaseModel):
     order_text: str
@@ -188,7 +189,15 @@ class OrderIn(BaseModel):
 
 @app.post("/api/patients/{uuid}/order-check")
 async def order_check(uuid: str, body: OrderIn) -> dict[str, Any]:
-    raise HTTPException(status_code=501, detail="order-check not implemented yet")
+    if not body.order_text.strip():
+        raise HTTPException(status_code=400, detail="empty order")
+    try:
+        ctx = await _get_context(uuid)
+    except (httpx.HTTPError, RuntimeError) as e:
+        raise _upstream_error(e)
+    # deterministic engine (no model call): safe to run on the event loop
+    result = check_order(body.order_text, ctx)
+    return result.model_dump()
 
 
 # ---------- SPA ----------

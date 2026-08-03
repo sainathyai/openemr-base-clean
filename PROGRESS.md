@@ -6,11 +6,12 @@ and `ARCHITECTURE.md`. This file is the quick map.
 
 Last updated: 2026-08-02. Branch `feat/clinical-copilot-foundation`, pushed to the
 personal fork `sainathyai/openemr-base-clean` (remote `fork`; `origin` remains the
-Gauntlet-HQ base, read-only). 45 tests green, plus a 21-case golden eval corpus at
+Gauntlet-HQ base, read-only). 58 tests green, plus a 21-case golden eval corpus at
 21/21. Now in the deployment/UI phase: a FastAPI serving layer + single-page UI is
-live locally, driving UC-1 and UC-3 in the browser on real FHIR data. Deploy target
-chosen: a single AWS EC2 t3.micro (free tier). Second interactive use case chosen:
-UC-2 order safety check (logic lands next).
+live locally, driving all three use cases in the browser on real FHIR data. Deploy
+target chosen: a single AWS EC2 t3.micro (free tier). UC-2 (order safety check) is
+built: a deterministic, sourced engine over a curated knowledge table, wired into a
+third UI surface.
 
 ## What this is
 
@@ -137,9 +138,29 @@ All in `copilot/`. Python + httpx + pydantic + langgraph + anthropic + langfuse.
    `COPILOT_FORCE_STUB` switch forces the deterministic stubs even when a key is set,
    for zero-spend demos/tests and as a deployment kill switch.
 
+7. **UC-2 order safety check** (`app/order_safety.py` + `app/data/order_knowledge.json`).
+   The third interactive surface, and deterministic like the rest: a physician types a
+   proposed order, and a curated drug table (class, renal handling, allergen class,
+   indications, contraindications, with provenance; the D-9 pattern) drives four sourced
+   checks: allergy (direct + class cross-reactivity), renal (the drug's renal profile
+   against the patient's own creatinine/eGFR via `classify_all`), duplicate therapy +
+   additive bleeding risk (against active meds), and indication/contraindication (against
+   the active problem list). The LLM is not in the path; every finding cites its FHIR
+   source_id, findings are severity-ranked (danger/caution/info/ok) and de-duplicated,
+   and an unrecognized drug returns "not recognized" with NO clearance (silence is never
+   safety). Problem matching uses whole-word matching and skips historical/contextual
+   entries, so "Past pregnancy history of miscarriage" no longer misfires an ACE-inhibitor
+   contraindication (regression-tested). Verified live on Pfeffer (CKD/HTN, on clopidogrel):
+   ibuprofen -> danger (renal + CKD contraindication + bleeding), metformin -> danger,
+   lisinopril -> caution (renal monitor, appropriate for HTN), amoxicillin -> caution. 13
+   engine tests. Endpoint `POST /api/patients/{uuid}/order-check`; UI renders severity
+   cards with source chips and a "what was checked" footnote.
+
 ## Validation state
 
-- 45 tests pass (`copilot/tests/`), no live OpenEMR needed: D-9 boundaries
+- 58 tests pass (`copilot/tests/`), no live OpenEMR needed: the UC-2 order-safety
+  engine (allergy/renal/duplicate/bleeding/indication/contraindication, the
+  unrecognized-drug fail-safe, and the historical-problem regression); D-9 boundaries
   (bands, sex-specificity, unit mismatch, pediatric, inverted HDL, target-based
   cholesterol), every gate rejection (unknown source, wrong direction, invented
   number, fabricated critical, category mismatch, full-hallucination block, UC-3
@@ -187,22 +208,20 @@ Claude has been validated once on Haiku; the rest runs offline on stubs by desig
 
 ## Deployment and UI phase (in progress)
 
-The headless core is now reachable and visible: the FastAPI serving layer + UI shell
-(build item 6) drive UC-1 and UC-3 in the browser on live FHIR data. The two decisions
-that gated this phase are made: UC-2 is the order safety check, and the deploy target
-is a single AWS EC2 t3.micro (D-1). Remaining work, in order:
+The headless core is now reachable and visible: the FastAPI serving layer + UI (build
+items 6-7) drive all three use cases in the browser on live FHIR data. The two decisions
+that gated this phase are made and built: UC-2 is the order safety check (done), and the
+deploy target is a single AWS EC2 t3.micro (D-1). Remaining work, in order:
 
-1. **UC-2 order-safety logic:** the third surface. Physician enters a proposed
-   medication/order; a deterministic engine checks it against allergies, renal
-   function (reuses the D-9 reference table on creatinine/eGFR), duplicate therapy,
-   and the active problem list, and the LLM narrates the already-computed findings.
-   Same fail-closed/flag trust model, no new truth path. The form and endpoint are
-   already wired; only the engine and its serialiser remain.
-2. **Server tests:** hermetic tests for the serving layer (`_briefing_payload`
-   serialiser, the order-check engine) alongside the existing 45. No live OpenEMR.
-3. **Public deploy (D-1):** provision the t3.micro (swap, trimmed compose, DB restore,
+1. **Server-layer tests:** the UC-2 engine is tested (13 cases); still to add are
+   hermetic tests for the FastAPI serialisers/endpoints (`_briefing_payload`, the
+   order-check endpoint shape) using a stubbed context, alongside the existing 58.
+2. **Public deploy (D-1):** provision the t3.micro (swap, trimmed compose, DB restore,
    Caddy/TLS, OAuth redirect URIs), then point it at the same compose the dev loop
    uses. Bring `COPILOT_FORCE_STUB` off only when a Claude budget is confirmed.
+3. **Polish for the demo:** optional LLM narration layer over UC-2 findings (kept out
+   of the truth path, same as UC-1), and iframe-embedding the panel into OpenEMR's
+   patient screen (currently a standalone page + picker).
 
 Deferred backlog (logged, not blocking): run the golden corpus once through real
 Haiku and log the two rates to Langfuse; the eval gate gap where a wrong-analyte

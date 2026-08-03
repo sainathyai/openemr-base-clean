@@ -401,6 +401,8 @@ function renderOrder() {
   c.appendChild(comp);
   const out = el("div"); out.id = "orderout"; out.style.marginTop = "16px"; c.appendChild(out);
 }
+const SEV = { danger:{cls:"critical",lab:"Danger"}, caution:{cls:"abnormal_lab",lab:"Caution"},
+              info:{cls:"trend",lab:"Info"}, ok:{cls:"new_medication",lab:"Clear"} };
 async function runOrder(text) {
   text = (text||"").trim(); if (!text || !state.selected) return;
   const out = $("#orderout"); out.innerHTML = ""; out.appendChild(loading("Checking order…"));
@@ -408,15 +410,45 @@ async function runOrder(text) {
     const r = await fetchJSON(`/api/patients/${state.selected.uuid}/order-check`, {
       method:"POST", headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ order_text:text }) });
-    out.innerHTML = ""; out.appendChild(withText(el("pre"), JSON.stringify(r, null, 2)));
-  } catch (e) {
-    out.innerHTML = "";
-    const box = el("div","err");
-    box.textContent = e.message.includes("not implemented")
-      ? "The order-check engine is being built next — the form and endpoint are wired, the safety logic lands in the next commit."
-      : "Error: " + e.message;
-    out.appendChild(box);
-  }
+    paintOrder(out, r);
+  } catch (e) { out.innerHTML = ""; const b = el("div","err"); b.textContent = "Error: " + e.message; out.appendChild(b); }
+}
+function paintOrder(out, r) {
+  out.innerHTML = "";
+  const head = el("div","vstrip");
+  const s = SEV[r.overall] || SEV.info;
+  const title = r.recognized
+    ? `${r.matched_drug} · ${r.drug_class}` : `“${r.order_text}” · not recognized`;
+  head.appendChild(withText(el("span","rate"), title));
+  const ob = el("span","badge"); ob.style.setProperty("color", `var(--c-${s.cls})`);
+  ob.style.borderColor = `color-mix(in srgb, var(--c-${s.cls}) 45%, var(--line))`;
+  ob.textContent = "overall: " + s.lab;
+  head.appendChild(ob);
+  out.appendChild(head);
+
+  const cards = el("div","cards");
+  r.findings.forEach(f => {
+    const sv = SEV[f.severity] || SEV.info;
+    const card = el("div","card"); card.style.setProperty("--cat", `var(--c-${sv.cls})`);
+    card.appendChild(withText(el("div","cat"), sv.lab + " · " + f.category));
+    const t = el("div","txt");
+    t.appendChild(withText(el("strong"), f.title + ". "));
+    t.appendChild(document.createTextNode(f.detail));
+    card.appendChild(t);
+    if (f.source_ids && f.source_ids.length) {
+      const chips = el("div","chips");
+      f.source_ids.forEach(id => chips.appendChild(withText(el("span","chip"), id)));
+      card.appendChild(chips);
+    }
+    cards.appendChild(card);
+  });
+  out.appendChild(cards);
+
+  const c = r.considered || {};
+  out.appendChild(withText(el("div","subline"),
+    `Checked ${c.allergies_checked ?? 0} allergies · ${c.active_meds_compared ?? 0} active meds · `
+    + `${c.active_problems_compared ?? 0} problems · renal labs ${c.renal_labs_found ? "found" : "none"} `
+    + `· knowledge table ${c.table_version || "?"}`));
 }
 
 /* ---------- helpers ---------- */
