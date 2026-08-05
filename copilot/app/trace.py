@@ -87,6 +87,36 @@ def score(name: str, value, comment: Optional[str] = None,
         pass
 
 
+def current_trace_id() -> Optional[str]:
+    """The active Langfuse trace id (call inside an `observe` block). Returned to the
+    client so user feedback (Layer C) can score this exact interaction later."""
+    c = _client()
+    if c is None:
+        return None
+    try:
+        return c.get_current_trace_id()
+    except Exception:
+        return None
+
+
+def score_trace(trace_id: Optional[str], name: str, value,
+                comment: Optional[str] = None, data_type: Optional[str] = None) -> bool:
+    """Attach a score to a specific (past) trace by id — used by the feedback endpoint.
+    Degrades to False on any SDK difference/error rather than raising."""
+    c = _client()
+    if c is None or not trace_id:
+        return False
+    for attempt in ("create_score", "score"):
+        try:
+            getattr(c, attempt)(trace_id=trace_id, name=name, value=value,
+                                comment=comment, data_type=data_type)
+            c.flush()
+            return True
+        except Exception:
+            continue
+    return False
+
+
 def flush() -> None:
     c = _client()
     if c is None:
