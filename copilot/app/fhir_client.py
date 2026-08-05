@@ -137,7 +137,8 @@ class FhirClient:
             "client_secret": settings.client_secret,
             "scope": ("openid api:fhir user/Patient.read user/Condition.read "
                       "user/MedicationRequest.read user/Observation.read "
-                      "user/Encounter.read user/AllergyIntolerance.read"),
+                      "user/Encounter.read user/AllergyIntolerance.read "
+                      "user/Appointment.read"),
             "user_role": "users",
             "username": settings.dev_user,
             "password": settings.dev_pass,
@@ -186,6 +187,37 @@ class FhirClient:
             for r in self._entries(b)
         ]
         out.sort(key=lambda p: p["name"].lower())
+        return out, ms
+
+    async def appointments(self, date_str: str, limit: int = 60) -> tuple[list[dict], int]:
+        """Today's schedule as thin dicts (not clinical context): start/end, the
+        patient uuid from the participant, status, and a display reason. OpenEMR
+        backs FHIR Appointment with the calendar; we seed real records for the demo."""
+        b, ms = await self._fetch("Appointment", {"date": date_str, "_count": str(limit)})
+        out = []
+        for r in self._entries(b):
+            puid = None
+            for p in r.get("participant", []):
+                ref = (p.get("actor") or {}).get("reference", "") or ""
+                if ref.startswith("Patient/"):
+                    puid = ref.split("/", 1)[1]
+                    break
+            # OpenEMR surfaces the visit reason (pc_hometext) as FHIR `comment`, not
+            # `description`; fall through to serviceType/appointmentType if absent.
+            reason = (r.get("description")
+                      or r.get("comment")
+                      or (_cc_text(r["serviceType"][0]) if r.get("serviceType") else None)
+                      or _cc_text(r.get("appointmentType")))
+            out.append({
+                "source_id": f"Appointment/{r.get('id')}",
+                "patient_uuid": puid,
+                "start": r.get("start"),
+                "end": r.get("end"),
+                "minutes": r.get("minutesDuration"),
+                "status": r.get("status"),
+                "description": _clean(reason),
+            })
+        out.sort(key=lambda a: a.get("start") or "")
         return out, ms
 
     async def patient(self, uuid: str) -> tuple[Optional[Demographics], int]:

@@ -32,6 +32,15 @@ class FixtureClient:
         path = self.root / "contexts" / f"{uuid}.json"
         return PatientContext.model_validate_json(path.read_text(encoding="utf-8"))
 
+    async def appointments(self, date_str: str, limit: int = 60) -> tuple[list[dict], int]:
+        """Read a captured/synthesised schedule. `date_str` is ignored for fixtures
+        (the snapshot is a single day); real FhirClient filters by date."""
+        path = self.root / "schedule.json"
+        if not path.exists():
+            return [], 0
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data[:limit], 0
+
     async def aclose(self) -> None:  # parity with FhirClient
         return None
 

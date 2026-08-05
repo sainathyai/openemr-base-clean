@@ -1,0 +1,204 @@
+[
+  {
+    "source_id": "Appointment/fixture-a2612690",
+    "patient_uuid": "a2612690-120e-4c64-ba43-ad34c8ea9438",
+    "start": "2026-08-03T08:00:00",
+    "end": "2026-08-03T08:15:00",
+    "minutes": 15,
+    "status": "arrived",
+    "description": "Asthma",
+    "flags": 2,
+    "room": "Room 2"
+  },
+  {
+    "source_id": "Appointment/fixture-a26126ac",
+    "patient_uuid": "a26126ac-06fc-4158-a632-23dbd45b7cfa",
+    "start": "2026-08-03T08:15:00",
+    "end": "2026-08-03T08:30:00",
+    "minutes": 15,
+    "status": "arrived",
+    "description": "Chronic kidney disease stage 1",
+    "flags": 1,
+    "room": "Room 3"
+  },
+  {
+    "source_id": "Appointment/fixture-a26126c6",
+    "patient_uuid": "a26126c6-5800-4f9f-9154-bc98840f5849",
+    "start": "2026-08-03T08:30:00",
+    "end": "2026-08-03T08:45:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Anemia",
+    "flags": 3
+  },
+  {
+    "source_id": "Appointment/fixture-a26126cc",
+    "patient_uuid": "a26126cc-d673-4a58-ab97-4730374ca786",
+    "start": "2026-08-03T08:45:00",
+    "end": "2026-08-03T09:00:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a26126d1",
+    "patient_uuid": "a26126d1-5671-408e-bcb8-f9c7adfe0d01",
+    "start": "2026-08-03T09:00:00",
+    "end": "2026-08-03T09:15:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Chronic sinusitis",
+    "flags": 2
+  },
+  {
+    "source_id": "Appointment/fixture-a26126e1",
+    "patient_uuid": "a26126e1-ccd5-47d4-ac4c-4a6f193aad76",
+    "start": "2026-08-03T09:15:00",
+    "end": "2026-08-03T09:30:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Chronic kidney disease stage 1",
+    "flags": 4
+  },
+  {
+    "source_id": "Appointment/fixture-a26126f6",
+    "patient_uuid": "a26126f6-b77e-4b6f-bae9-047d67e68ead",
+    "start": "2026-08-03T09:30:00",
+    "end": "2026-08-03T09:45:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Chronic obstructive bronchitis",
+    "flags": 4
+  },
+  {
+    "source_id": "Appointment/fixture-a26126fc",
+    "patient_uuid": "a26126fc-0dbb-4486-8390-e54128af08bc",
+    "start": "2026-08-03T09:45:00",
+    "end": "2026-08-03T10:00:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Atopic dermatitis",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612702",
+    "patient_uuid": "a2612702-2da0-4306-ba31-e61e0a486e81",
+    "start": "2026-08-03T10:00:00",
+    "end": "2026-08-03T10:15:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612708",
+    "patient_uuid": "a2612708-b80b-4f67-8c12-d0d1d11762af",
+    "start": "2026-08-03T10:15:00",
+    "end": "2026-08-03T10:30:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Familial Alzheimer's disease of early on\u2026",
+    "flags": 3
+  },
+  {
+    "source_id": "Appointment/fixture-a261270e",
+    "patient_uuid": "a261270e-802c-47d9-8898-c6b8c9fa5bc2",
+    "start": "2026-08-03T10:30:00",
+    "end": "2026-08-03T10:45:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612712",
+    "patient_uuid": "a2612712-af71-4c00-8f05-628703e141d2",
+    "start": "2026-08-03T10:45:00",
+    "end": "2026-08-03T11:00:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612718",
+    "patient_uuid": "a2612718-b9ba-44b5-88e9-28568aed3faa",
+    "start": "2026-08-03T11:00:00",
+    "end": "2026-08-03T11:15:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a261271c",
+    "patient_uuid": "a261271c-aec0-4809-ba98-b21d3aaaccf5",
+    "start": "2026-08-03T11:15:00",
+    "end": "2026-08-03T11:30:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612721",
+    "patient_uuid": "a2612721-ce11-4637-b41c-ba80c1176a78",
+    "start": "2026-08-03T11:30:00",
+    "end": "2026-08-03T11:45:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  },
+  {
+    "source_id": "Appointment/fixture-a2612728",
+    "patient_uuid": "a2612728-f4e6-4d9d-acc0-b2b0ed81cca0",
+    "start": "2026-08-03T11:45:00",
+    "end": "2026-08-03T12:00:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Chronic kidney disease stage 1",
+    "flags": 6
+  },
+  {
+    "source_id": "Appointment/fixture-a2612739",
+    "patient_uuid": "a2612739-bc69-40ea-a915-2af68833149f",
+    "start": "2026-08-03T12:30:00",
+    "end": "2026-08-03T12:45:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Essential hypertension",
+    "flags": 4
+  },
+  {
+    "source_id": "Appointment/fixture-a2612746",
+    "patient_uuid": "a2612746-7616-4ea8-94a8-d47d6944db44",
+    "start": "2026-08-03T12:45:00",
+    "end": "2026-08-03T13:00:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Chronic sinusitis",
+    "flags": 3
+  },
+  {
+    "source_id": "Appointment/fixture-a261274d",
+    "patient_uuid": "a261274d-48d2-4d8b-ab59-5b69e9e0197f",
+    "start": "2026-08-03T13:00:00",
+    "end": "2026-08-03T13:15:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Essential hypertension",
+    "flags": 2
+  },
+  {
+    "source_id": "Appointment/fixture-a2612752",
+    "patient_uuid": "a2612752-e446-4607-aa64-d2926e31623a",
+    "start": "2026-08-03T13:15:00",
+    "end": "2026-08-03T13:30:00",
+    "minutes": 15,
+    "status": "booked",
+    "description": "Annual wellness visit",
+    "flags": 0
+  }
+]
