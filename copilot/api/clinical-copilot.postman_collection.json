@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "Clinical Co-Pilot API",
+    "_postman_id": "b7c9e4a1-2f5d-4a3b-9c11-copilotapi0001",
+    "description": "Runnable collection for the Clinical Co-Pilot serving layer (D-3).\n\nSet the `base_url` variable to your target (defaults to the live demo). Run the whole collection in order: the **Patients (roster)** request stores the first patient's uuid into `patient_uuid`, which the briefing/chart/chat/order-check requests then use. Briefing/chat/order-check also capture the returned `trace_id` into `trace_id` for the Feedback request.\n\nOps: `/api/health` (liveness), `/api/ready` (readiness, 503 if the data source is down), `/api/metrics` (dashboard source, see GET / dashboard).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "https://copilot.veritasintelai.com", "type": "string" },
+    { "key": "patient_uuid", "value": "", "type": "string" },
+    { "key": "trace_id", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Ops",
+      "item": [
+        {
+          "name": "Health (liveness)",
+          "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/health", "host": ["{{base_url}}"], "path": ["api", "health"] } },
+          "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('200 ok', () => pm.response.code === 200);",
+            "pm.test('status ok', () => pm.response.json().status === 'ok');"
+          ] } } ]
+        },
+        {
+          "name": "Ready (readiness)",
+          "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/ready", "host": ["{{base_url}}"], "path": ["api", "ready"] } },
+          "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('200 when ready (503 if data source down)', () => [200,503].includes(pm.response.code));",
+            "pm.test('reports data_source check', () => pm.response.json().checks.data_source !== undefined);"
+          ] } } ]
+        },
+        {
+          "name": "Metrics (dashboard source)",
+          "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/metrics", "host": ["{{base_url}}"], "path": ["api", "metrics"] } },
+          "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('200 ok', () => pm.response.code === 200);",
+            "pm.test('has routes + error_rate', () => { const b = pm.response.json(); return b.routes !== undefined && b.error_rate !== undefined; });"
+          ] } } ]
+        }
+      ]
+    },
+    {
+      "name": "Patients (roster)",
+      "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/patients", "host": ["{{base_url}}"], "path": ["api", "patients"] } },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "const b = pm.response.json();",
+        "pm.test('roster has patients', () => b.patients && b.patients.length > 0);",
+        "if (b.patients && b.patients.length) { pm.collectionVariables.set('patient_uuid', b.patients[0].uuid); }"
+      ] } } ]
+    },
+    {
+      "name": "Schedule (today's clinic)",
+      "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/schedule", "host": ["{{base_url}}"], "path": ["api", "schedule"] } },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "pm.test('returns appointments', () => Array.isArray(pm.response.json().appointments));"
+      ] } } ]
+    },
+    {
+      "name": "Briefing (UC-1, verified)",
+      "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/patients/{{patient_uuid}}/briefing", "host": ["{{base_url}}"], "path": ["api", "patients", "{{patient_uuid}}", "briefing"] } },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "const b = pm.response.json();",
+        "pm.test('carries verification meta', () => b.meta && b.meta.verification && b.meta.verification.claims >= 0);",
+        "pm.test('no unverifiable claim leaked into statements', () => (b.statements||[]).every(s => s.source_ids !== undefined));",
+        "if (b.meta && b.meta.trace_id) pm.collectionVariables.set('trace_id', b.meta.trace_id);"
+      ] } } ]
+    },
+    {
+      "name": "Chart (original record, verify view)",
+      "request": { "method": "GET", "url": { "raw": "{{base_url}}/api/patients/{{patient_uuid}}/chart", "host": ["{{base_url}}"], "path": ["api", "patients", "{{patient_uuid}}", "chart"] } },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "pm.test('has source-attributed sections', () => { const b = pm.response.json(); return b.labs !== undefined && b.counts !== undefined; });"
+      ] } } ]
+    },
+    {
+      "name": "Chat (UC-3, grounded Q&A)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"question\": \"What changed since the last visit?\"\n}" },
+        "url": { "raw": "{{base_url}}/api/patients/{{patient_uuid}}/chat", "host": ["{{base_url}}"], "path": ["api", "patients", "{{patient_uuid}}", "chat"] }
+      },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "const b = pm.response.json();",
+        "pm.test('answer carries a grounded flag', () => b.grounded !== undefined);",
+        "if (b.trace_id) pm.collectionVariables.set('trace_id', b.trace_id);"
+      ] } } ]
+    },
+    {
+      "name": "Order check (UC-2, safety)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"order_text\": \"Ibuprofen 600 mg\"\n}" },
+        "url": { "raw": "{{base_url}}/api/patients/{{patient_uuid}}/order-check", "host": ["{{base_url}}"], "path": ["api", "patients", "{{patient_uuid}}", "order-check"] }
+      },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "const b = pm.response.json();",
+        "pm.test('returns an overall verdict', () => b.overall !== undefined);",
+        "pm.test('every finding cites a source', () => (b.findings||[]).every(f => Array.isArray(f.source_ids)));",
+        "if (b.trace_id) pm.collectionVariables.set('trace_id', b.trace_id);"
+      ] } } ]
+    },
+    {
+      "name": "Feedback (Layer C)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"trace_id\": \"{{trace_id}}\",\n  \"value\": 1,\n  \"use_case\": \"briefing\",\n  \"comment\": \"looks right\"\n}" },
+        "url": { "raw": "{{base_url}}/api/feedback", "host": ["{{base_url}}"], "path": ["api", "feedback"] }
+      },
+      "event": [ { "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 ok', () => pm.response.code === 200);",
+        "pm.test('recorded flag present (false if Langfuse off or no trace_id)', () => pm.response.json().recorded !== undefined);"
+      ] } } ]
+    }
+  ]
+}

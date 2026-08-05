@@ -67,6 +67,7 @@ class ChatResult(BaseModel):
     tool_calls: list[str] = Field(default_factory=list)
     usage: dict[str, Any] = Field(default_factory=dict)
     latency_ms: int = 0
+    trace_id: str | None = None
 
 
 def check_grounding(answer: str, citations: list[str], tools: ContextTools) -> list[Violation]:
@@ -153,9 +154,10 @@ class ClaudeChat:
             trace.update(root, output={"answer": answer, "grounded": not violations},
                          usage_details={"input": usage["input_tokens"],
                                         "output": usage["output_tokens"]})
-        trace.score("grounded", 1.0 if not violations else 0.0,
-                    comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
-                    data_type="BOOLEAN")
+            trace.score("grounded", 1.0 if not violations else 0.0,
+                        comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
+                        data_type="BOOLEAN")
+            tid = trace.current_trace_id()
         trace.flush()
         return ChatResult(
             question=question, answer=answer, citations=citations,
@@ -163,6 +165,7 @@ class ClaudeChat:
             tool_calls=tool_calls,
             usage={"provider": self.name, **usage},
             latency_ms=int((time.perf_counter() - t0) * 1000),
+            trace_id=tid,
         )
 
 
@@ -231,18 +234,21 @@ class StubChat:
                 answer = f"No lab results matching '{term}' with a recorded value in the chart."
 
         violations = check_grounding(answer, citations, self.tools)
+        tid = None
         with trace.observe("uc3_chart_qa", "agent", input={"question": question},
                            metadata={"provider": "stub", "tools": calls}) as root:
             trace.update(root, output={"answer": answer, "grounded": not violations})
-        trace.score("grounded", 1.0 if not violations else 0.0,
-                    comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
-                    data_type="BOOLEAN")
+            trace.score("grounded", 1.0 if not violations else 0.0,
+                        comment="; ".join(f"{v.rule}:{v.detail}" for v in violations) or "ok",
+                        data_type="BOOLEAN")
+            tid = trace.current_trace_id()
         trace.flush()
         return ChatResult(
             question=question, answer=answer, citations=citations,
             grounded=len(violations) == 0, violations=violations,
             tool_calls=calls, usage={"provider": "stub"},
             latency_ms=int((time.perf_counter() - t0) * 1000),
+            trace_id=tid,
         )
 
 

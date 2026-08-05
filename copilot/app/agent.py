@@ -93,8 +93,19 @@ def _verify(state: AgentState) -> AgentState:
         passed = sum(1 for v in verified if v.ok)
         trace.update(gd, output={"passed": passed, "dropped": len(verified) - passed})
     if verified:
-        trace.score("verification_pass_rate", passed / len(verified),
-                    comment=f"{passed}/{len(verified)} claims verified")
+        n = len(verified)
+        dropped = n - passed
+        trace.score("verification_pass_rate", passed / n,
+                    comment=f"{passed}/{n} claims verified")
+        # The accuracy signal: fraction of the model's claims the gate had to drop as
+        # unverifiable. ~0 with the stub; the number that matters once Claude narrates.
+        trace.score("hallucination_rate", dropped / n,
+                    comment=f"{dropped}/{n} claims dropped by the gate")
+        # Every surfaced claim should carry a resolvable source (D-8). Track it in case
+        # a future change lets an unsourced claim through.
+        sourced = sum(1 for v in verified if v.ok and v.statement.source_ids)
+        trace.score("source_coverage", (sourced / passed) if passed else 1.0,
+                    comment=f"{sourced}/{passed} shown claims carry a source")
     timings = dict(state.get("timings_ms", {}))
     timings["verify"] = int((_now() - t0) * 1000)
     warnings = list(state.get("warnings", []))
@@ -141,11 +152,22 @@ async def run(patient_uuid: str, narrator: Optional[Narrator] = None) -> AgentSt
         "timings_ms": {}, "warnings": [],
     }
     t0 = _now()
+    trace_id: Optional[str] = None
     with trace.observe("uc1_previsit_synthesis", "agent",
                        input={"patient_uuid": patient_uuid},
                        metadata={"correlation_id": cid}) as root:
         out: AgentState = await graph.ainvoke(init)
         trace.update(root, output={"summary_chars": len(out.get("summary_md", ""))})
+        trace_id = trace.current_trace_id()
+        # Data-source health: total FHIR fetch time + whether any resource read failed.
+        fetch = out.get("fetch_ms", {}) or {}
+        if fetch:
+            trace.score("fhir_fetch_ms_total", float(sum(fetch.values())),
+                        comment="parallel FHIR context pull latency")
+        fetch_failures = sum(1 for w in out.get("warnings", []) if "failed" in w.lower())
+        trace.score("fhir_fetch_ok", 0.0 if fetch_failures else 1.0,
+                    comment=f"{fetch_failures} resource read(s) failed")
     out["timings_ms"]["wall"] = int((_now() - t0) * 1000)
+    out["trace_id"] = trace_id
     trace.flush()
     return out

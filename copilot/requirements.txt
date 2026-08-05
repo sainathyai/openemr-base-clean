@@ -9,3 +9,6 @@ langfuse==4.14.2
 # so the deployed footprint is one uvicorn worker (fits the t3.micro target).
 fastapi==0.115.5
 uvicorn==0.32.1
+# Prometheus text-exposition at /metrics; scraped by the side-car Prometheus and
+# visualised in Grafana (production-grade request-path observability).
+prometheus-client==0.21.0

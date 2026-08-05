@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Co-Pilot · Ops Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='8' fill='%232f6a60'/><path d='M4.5 14.5h3.2l1.7-4.4 3 8.8 2.1-6 1.4 3.1h3.6' stroke='white' stroke-width='1.9' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='21.5' cy='9' r='2.1' fill='white'/></svg>">
+<style>
+  :root {
+    --bg:#f4f1ea; --panel:#fffefb; --panel-2:#efeae1; --ink:#22201c; --ink-2:#403b34;
+    --muted:#77716a; --line:#e6e0d5; --line-2:#d9d2c5; --accent:#2f6a60;
+    --flag:#9a5a22; --crit:#9c342c; --ok:#3f6b4e;
+    --radius:12px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --shadow:0 1px 2px rgba(40,32,20,.05),0 6px 20px rgba(40,32,20,.05);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#191a18;--panel:#212320;--panel-2:#191a17;--ink:#e9e6df;--ink-2:#cfcabf;
+    --muted:#9c968b;--line:#30322d;--line-2:#3a3c36;--accent:#7fb4a9;
+    --flag:#cf934f;--crit:#d97b6d;--ok:#84b58f;--shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;
+       -webkit-font-smoothing:antialiased}
+  .bar{display:flex;align-items:center;gap:12px;padding:14px 26px;border-bottom:1px solid var(--line);
+       background:var(--panel)}
+  .bar h1{font-size:16px;margin:0;font-weight:700}
+  .bar .sub{color:var(--muted);font-size:13px}
+  .bar .spacer{flex:1}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:6px}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 26px 40px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        box-shadow:var(--shadow);padding:16px 18px}
+  .card .k{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .card .v{font-size:30px;font-weight:750;margin-top:6px;font-variant-numeric:tabular-nums}
+  .card .v small{font-size:14px;color:var(--muted);font-weight:600}
+  .card.warn .v{color:var(--flag)} .card.crit .v{color:var(--crit)} .card.ok .v{color:var(--ok)}
+  h2{font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);
+     margin:0 0 10px}
+  .section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+           box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+     font-weight:700;padding:10px 16px;border-bottom:1px solid var(--line)}
+  td{padding:9px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  td.num{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+  .route{font-family:var(--mono);font-size:12.5px}
+  .err{color:var(--crit);font-weight:700}
+  .foot{color:var(--muted);font-size:12px;margin-top:8px}
+  .pill{font-size:12px;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:3px 10px}
+</style>
+</head>
+<body>
+  <header class="bar">
+    <h1>Clinical Co-Pilot · Ops</h1>
+    <span class="sub" id="uptime">—</span>
+    <div class="spacer"></div>
+    <span class="pill"><span class="dot" id="live"></span><span id="status">connecting…</span></span>
+  </header>
+  <div class="wrap">
+    <div class="grid" id="kpis"></div>
+
+    <h2>Latency &amp; errors by route</h2>
+    <div class="section"><table>
+      <thead><tr><th>Route</th><th style="text-align:right">Requests</th><th style="text-align:right">Errors</th>
+        <th style="text-align:right">p50 ms</th><th style="text-align:right">p95 ms</th><th style="text-align:right">max ms</th></tr></thead>
+      <tbody id="routes"></tbody>
+    </table></div>
+
+    <div class="foot">
+      Request-side signal is served in-process from <code>/api/metrics</code>. Model-path signal
+      (per-tool spans, token cost, verification &amp; grounding scores over time) lives in Langfuse.
+      Liveness: <code>/api/health</code> · Readiness: <code>/api/ready</code>. Refreshes every 2s.
+    </div>
+  </div>
+
+<script>
+const $=s=>document.querySelector(s);
+const kpi=(k,v,sub,cls)=>`<div class="card ${cls||''}"><div class="k">${k}</div>
+  <div class="v">${v}${sub?` <small>${sub}</small>`:''}</div></div>`;
+const fmt=n=>n==null?'—':(typeof n==='number'?n.toLocaleString():n);
+
+async function tick(){
+  try{
+    const r=await fetch('/api/metrics',{cache:'no-store'}); const m=await r.json();
+    $('#live').style.background='var(--ok)'; $('#status').textContent='live';
+    $('#uptime').textContent='uptime '+Math.round(m.uptime_s)+'s';
+    const v=m.verification||{};
+    const errCls=m.error_rate>0.05?'crit':(m.error_rate>0?'warn':'ok');
+    $('#kpis').innerHTML=[
+      kpi('Requests', fmt(m.requests)),
+      kpi('Error rate', (m.error_rate*100).toFixed(2)+'%', fmt(m.errors)+' errors', errCls),
+      kpi('Verification pass', v.pass_rate==null?'—':(v.pass_rate*100).toFixed(1)+'%',
+          `${fmt(v.passed)}/${fmt(v.claims)} claims`, v.pass_rate===1?'ok':(v.pass_rate!=null?'warn':'')),
+      kpi('Claims dropped', fmt(v.dropped), 'by the gate', v.dropped>0?'warn':'ok'),
+      kpi('Tool calls', fmt(m.tool_calls)),
+      kpi('Retries', fmt(m.retries), 'upstream', m.retries>0?'warn':'ok'),
+    ].join('');
+    const rows=Object.entries(m.routes||{}).map(([route,s])=>`<tr>
+      <td class="route">${route}</td>
+      <td class="num">${fmt(s.count)}</td>
+      <td class="num ${s.errors?'err':''}">${fmt(s.errors)}</td>
+      <td class="num">${fmt(s.p50_ms)}</td><td class="num">${fmt(s.p95_ms)}</td>
+      <td class="num">${fmt(s.max_ms)}</td></tr>`).join('');
+    $('#routes').innerHTML=rows||`<tr><td colspan="6" style="color:var(--muted)">No requests yet.</td></tr>`;
+  }catch(e){ $('#live').style.background='var(--crit)'; $('#status').textContent='offline'; }
+}
+tick(); setInterval(tick,2000);
+</script>
+</body>
+</html>
