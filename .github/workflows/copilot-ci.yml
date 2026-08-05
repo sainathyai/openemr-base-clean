@@ -1,0 +1,47 @@
+# Clinical Co-Pilot CI: the deterministic test + eval gate.
+# Runs the pytest suite and the two golden-eval corpora (Week-1 verification/
+# grounding, Week-2 evidence extraction + retrieval) on every push/PR that
+# touches the copilot code. Stub-only: no LLM, no DB, no model downloads, so it
+# is fast and free, and it FAILS the build if a gate or the retriever regresses.
+name: copilot-ci
+
+on:
+  push:
+    paths:
+      - "copilot/**"
+      - ".github/workflows/copilot-ci.yml"
+  pull_request:
+    paths:
+      - "copilot/**"
+      - ".github/workflows/copilot-ci.yml"
+  workflow_dispatch:
+
+# Only run on the personal fork; never fan out onto the upstream base repo.
+jobs:
+  test:
+    if: github.repository == 'sainathyai/openemr-base-clean'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: copilot
+    env:
+      # keep the model + observability paths dormant so CI is deterministic
+      COPILOT_FORCE_STUB: "1"
+      COPILOT_FIXTURES: app/data/fixtures
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: copilot/requirements.txt
+      - name: Install (runtime + dev)
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+      - name: Unit + integration tests
+        run: python -m pytest -q
+      - name: Week-1 golden eval (verification + grounding)
+        run: python -m eval.run
+      - name: Week-2 evidence eval (extraction + retrieval, 50 cases)
+        run: python -m eval.evidence_run
