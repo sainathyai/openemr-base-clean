@@ -1,0 +1,162 @@
+[
+  {
+    "id": "kdigo-ckd-metformin",
+    "title": "Metformin dosing in reduced kidney function",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "CKD & diabetes management",
+    "url": "https://kdigo.org/guidelines/diabetes-ckd/",
+    "tags": ["ckd", "metformin", "egfr", "diabetes"],
+    "text": "Metformin may be continued in chronic kidney disease when eGFR is 30 mL/min/1.73m2 or above. Reduce the dose when eGFR falls below 45 and review the benefit-risk. Discontinue metformin when eGFR is below 30 mL/min/1.73m2 because of the risk of lactic acidosis."
+  },
+  {
+    "id": "kdigo-ckd-ace-arb",
+    "title": "ACE inhibitor or ARB in CKD with albuminuria",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Blood pressure and RAAS blockade",
+    "url": "https://kdigo.org/guidelines/blood-pressure/",
+    "tags": ["ckd", "ace", "arb", "hypertension", "albuminuria"],
+    "text": "In patients with chronic kidney disease and hypertension, particularly with albuminuria, an ACE inhibitor or angiotensin receptor blocker is recommended and titrated to the highest tolerated dose. Check serum creatinine and potassium within 2 to 4 weeks of starting or increasing the dose."
+  },
+  {
+    "id": "kdigo-ckd-potassium",
+    "title": "Monitoring potassium on RAAS blockade",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Electrolyte monitoring",
+    "url": "https://kdigo.org/guidelines/blood-pressure/",
+    "tags": ["ckd", "potassium", "hyperkalemia", "ace", "arb"],
+    "text": "Hyperkalemia is a recognized risk of ACE inhibitors and ARBs, especially in chronic kidney disease. A serum potassium above 5.0 mmol/L warrants closer monitoring; above 5.5 mmol/L consider dose reduction, dietary counseling, or a potassium binder rather than routinely stopping the RAAS blocker."
+  },
+  {
+    "id": "kdigo-ckd-staging",
+    "title": "CKD staging by eGFR",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Definition and staging",
+    "url": "https://kdigo.org/guidelines/ckd-evaluation-and-management/",
+    "tags": ["ckd", "egfr", "staging"],
+    "text": "Chronic kidney disease is staged by eGFR: G1 90 or above, G2 60 to 89, G3a 45 to 59, G3b 30 to 44, G4 15 to 29, and G5 below 15 mL/min/1.73m2. An eGFR of 38 corresponds to stage G3b, indicating moderately to severely reduced kidney function."
+  },
+  {
+    "id": "kdigo-ckd-anemia",
+    "title": "Anemia of chronic kidney disease",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Anemia management",
+    "url": "https://kdigo.org/guidelines/anemia-in-ckd/",
+    "tags": ["ckd", "anemia", "hemoglobin", "iron"],
+    "text": "Anemia is common in chronic kidney disease. Evaluate hemoglobin at least annually, and more often as eGFR declines. Assess iron status before considering erythropoiesis-stimulating agents. A hemoglobin of 10.8 g/dL in a man with CKD is below the reference range and merits an iron studies workup."
+  },
+  {
+    "id": "ada-t2dm-a1c-target",
+    "title": "Glycemic targets in type 2 diabetes",
+    "org": "ADA",
+    "year": 2025,
+    "section": "Glycemic goals",
+    "url": "https://diabetesjournals.org/care/standards-of-care",
+    "tags": ["diabetes", "a1c", "glucose"],
+    "text": "A reasonable HbA1c goal for many nonpregnant adults with type 2 diabetes is below 7%. Less stringent goals such as below 8% may be appropriate for patients with limited life expectancy, advanced complications, or extensive comorbidity. A fasting glucose of 142 mg/dL suggests above-target control and warrants review of therapy."
+  },
+  {
+    "id": "ada-t2dm-first-line",
+    "title": "First-line pharmacotherapy for type 2 diabetes",
+    "org": "ADA",
+    "year": 2025,
+    "section": "Pharmacologic therapy",
+    "url": "https://diabetesjournals.org/care/standards-of-care",
+    "tags": ["diabetes", "metformin", "sglt2", "ckd"],
+    "text": "Metformin is a common initial agent for type 2 diabetes. In patients with established chronic kidney disease, an SGLT2 inhibitor with proven kidney benefit is recommended to reduce progression of kidney disease and cardiovascular events, independent of HbA1c and metformin use."
+  },
+  {
+    "id": "accaha-htn-target",
+    "title": "Blood pressure targets in hypertension",
+    "org": "ACC/AHA",
+    "year": 2017,
+    "section": "Treatment thresholds and goals",
+    "url": "https://www.ahajournals.org/doi/10.1161/HYP.0000000000000065",
+    "tags": ["hypertension", "blood-pressure"],
+    "text": "For adults with confirmed hypertension, a blood pressure target of less than 130/80 mmHg is recommended, including patients with chronic kidney disease or diabetes. A reading of 154/88 mmHg is above goal and indicates the need for treatment intensification or adherence review."
+  },
+  {
+    "id": "accaha-statin-secondary",
+    "title": "Statin therapy and monitoring",
+    "org": "ACC/AHA",
+    "year": 2018,
+    "section": "Cholesterol management",
+    "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000625",
+    "tags": ["statin", "atorvastatin", "cholesterol", "ldl"],
+    "text": "High-intensity statin therapy such as atorvastatin 40 to 80 mg is indicated for patients with clinical atherosclerotic cardiovascular disease. Obtain a lipid panel 4 to 12 weeks after initiation to assess adherence and response, then periodically thereafter."
+  },
+  {
+    "id": "penicillin-cephalosporin-cross",
+    "title": "Penicillin allergy and cephalosporin cross-reactivity",
+    "org": "AAAAI",
+    "year": 2022,
+    "section": "Drug allergy",
+    "url": "https://www.aaaai.org/tools-for-the-public/conditions-library/allergies/penicillin-allergy",
+    "tags": ["allergy", "penicillin", "cephalosporin"],
+    "text": "The rate of cross-reactivity between penicillins and cephalosporins is low, historically overstated, and driven mainly by shared side chains. For a documented penicillin allergy that is not anaphylaxis, many cephalosporins with dissimilar side chains can be used with caution. A documented penicillin reaction should still be recorded and reconciled at every visit."
+  },
+  {
+    "id": "nsaid-ckd-avoid",
+    "title": "NSAIDs in chronic kidney disease",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Nephrotoxin avoidance",
+    "url": "https://kdigo.org/guidelines/ckd-evaluation-and-management/",
+    "tags": ["ckd", "nsaid", "ibuprofen", "nephrotoxin"],
+    "text": "Nonsteroidal anti-inflammatory drugs such as ibuprofen should be avoided in chronic kidney disease because they reduce renal perfusion and can cause acute kidney injury and hyperkalemia, particularly when combined with ACE inhibitors or ARBs and diuretics."
+  },
+  {
+    "id": "uspstf-ckd-monitoring",
+    "title": "Frequency of CKD monitoring",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Monitoring cadence",
+    "url": "https://kdigo.org/guidelines/ckd-evaluation-and-management/",
+    "tags": ["ckd", "egfr", "monitoring", "care-gap"],
+    "text": "The frequency of eGFR and albuminuria testing in chronic kidney disease is guided by stage and risk. Stage G3b patients should generally be assessed at least every 6 months, and more often if eGFR is declining or therapy is being changed."
+  },
+  {
+    "id": "medrec-transitions",
+    "title": "Medication reconciliation at care transitions",
+    "org": "Joint Commission",
+    "year": 2023,
+    "section": "Patient safety",
+    "url": "https://www.jointcommission.org/",
+    "tags": ["medication-reconciliation", "safety", "intake"],
+    "text": "A complete and accurate medication reconciliation should be performed at every care transition and outpatient visit. Home medications reported on an intake form should be compared against the active medication list, and discrepancies resolved with the patient before new orders are placed."
+  },
+  {
+    "id": "hyperkalemia-acute",
+    "title": "Assessment of hyperkalemia",
+    "org": "ACC/AHA",
+    "year": 2020,
+    "section": "Electrolyte emergencies",
+    "url": "https://www.ahajournals.org/",
+    "tags": ["potassium", "hyperkalemia", "ecg"],
+    "text": "Serum potassium above the upper reference limit should be interpreted with the clinical context and medication list. Levels above 6.0 mmol/L, or any level with ECG changes, are a medical emergency. Mild elevations near 5.1 mmol/L in a stable CKD patient on RAAS blockade are usually managed with monitoring and review of contributing drugs."
+  },
+  {
+    "id": "egfr-creatinine-relationship",
+    "title": "Interpreting creatinine and eGFR together",
+    "org": "KDIGO",
+    "year": 2024,
+    "section": "Laboratory interpretation",
+    "url": "https://kdigo.org/guidelines/ckd-evaluation-and-management/",
+    "tags": ["creatinine", "egfr", "ckd", "labs"],
+    "text": "Serum creatinine and eGFR move in opposite directions: a rising creatinine reflects a falling eGFR. A creatinine of 2.10 mg/dL in an adult typically corresponds to a substantially reduced eGFR and, if sustained over 3 months, supports a diagnosis of chronic kidney disease."
+  },
+  {
+    "id": "ada-ckd-screening",
+    "title": "Annual kidney screening in diabetes",
+    "org": "ADA",
+    "year": 2025,
+    "section": "Complications screening",
+    "url": "https://diabetesjournals.org/care/standards-of-care",
+    "tags": ["diabetes", "ckd", "screening", "albuminuria", "care-gap"],
+    "text": "Patients with type 2 diabetes should have annual assessment of eGFR and urinary albumin-to-creatinine ratio. Absence of a documented albumin-to-creatinine ratio in the past year is a common care gap in diabetic patients with reduced eGFR."
+  }
+]

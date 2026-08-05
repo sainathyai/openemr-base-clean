@@ -6,6 +6,13 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 
+# OCR engine for the scanned/faxed-document path (Week 2). The binary lives in
+# the image so OCR works identically in local Docker and on the cloud box; no
+# host install. tesseract-ocr-eng ships the English language data.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-eng \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 

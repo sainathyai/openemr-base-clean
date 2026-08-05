@@ -12,3 +12,20 @@ uvicorn==0.32.1
 # Prometheus text-exposition at /metrics; scraped by the side-car Prometheus and
 # visualised in Grafana (production-grade request-path observability).
 prometheus-client==0.21.0
+# Week 2 — document ingestion. PyMuPDF gives word-level bounding boxes (for bbox
+# citations) AND page rasterization (to feed the OCR fallback), so one library
+# covers born-digital and scanned PDFs. Tesseract is the OCR engine; the binary
+# lives in the image (see Dockerfile), pytesseract is the Python bridge, Pillow
+# carries the rasterized page image between the two.
+pymupdf==1.24.10
+pytesseract==0.3.13
+Pillow==10.4.0
+# Week 2 — hybrid RAG over the guideline corpus. fastembed runs quantized ONNX
+# models on CPU (dense embeddings + the cross-encoder reranker) with no PyTorch,
+# so it fits the small deploy box; rank-bm25 is the sparse arm; numpy backs the
+# in-memory store; psycopg + pgvector are the production vector backend.
+fastembed==0.4.2
+rank-bm25==0.2.2
+numpy==1.26.4
+psycopg[binary]==3.2.3
+pgvector==0.3.6
